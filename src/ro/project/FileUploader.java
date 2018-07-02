@@ -8,23 +8,24 @@ public class FileUploader {
     private int numeroVeicoli;
     private int capacitaVeicolo;
     private NodoDeposito nodoDeposito;
-    private BufferedReader buffer;
+    private BufferedReader file;
 
     public FileUploader() {
         this.numeroClienti = 0;
         this.numeroVeicoli = 0;
         this.capacitaVeicolo = 0;
         this.nodoDeposito = null;
-        this.buffer = null;
+        this.file = null;
     }
 
-    public void caricaIstanza(String file) {
+    public void caricaIstanza(String file_path) {
         try {
 
-            buffer = new BufferedReader(
-                    new FileReader("project_files/Instances/" + file + ".txt")
+            file = new BufferedReader(
+                    new FileReader("project_files/Instances/" + file_path + ".txt")
             );
-            
+
+
         } catch (Exception e) {
 
             e.printStackTrace();
