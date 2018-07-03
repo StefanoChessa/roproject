@@ -81,4 +81,15 @@ public class FileUploader {
         return this.nodoDeposito;
     }
 
+    public ArrayList<Nodo> getTuttiNodi(){
+
+        ArrayList<Nodo> nodi = new ArrayList<>();
+
+        nodi.add(this.nodoDeposito);
+        nodi.addAll(this.clienti);
+
+        return nodi;
+
+    }
+
 }
