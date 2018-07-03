@@ -2,7 +2,6 @@ package ro.project;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.ArrayList;
 
 public class FileUploader {
 
@@ -12,7 +11,6 @@ public class FileUploader {
     private NodoDeposito nodoDeposito;
     private BufferedReader file;
     private String currentLine;
-    private ArrayList<NodoCliente> clienti;
 
     public FileUploader() {
         this.numeroClienti = 0;
@@ -54,8 +52,6 @@ public class FileUploader {
                 y = Integer.parseInt(dati[1]);
                 delivery = Integer.parseInt(dati[2]);
                 pickup = Integer.parseInt(dati[3]);
-
-                clienti.add(new NodoCliente(x,y, delivery, pickup));
 
                 System.out.println(x + " " + y + " " + delivery + " " + pickup);
 
