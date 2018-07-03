@@ -11,6 +11,7 @@ public class FileUploader {
     private NodoDeposito nodoDeposito;
     private BufferedReader file;
     private String currentLine;
+    private String separatore = "   ";
 
     public FileUploader() {
         this.numeroClienti = 0;
@@ -36,7 +37,7 @@ public class FileUploader {
 
             currentLine = file.readLine();  //quarta riga
 
-            String[] dati = currentLine.split("   ");
+            String[] dati = currentLine.split(separatore);
 
             x = Integer.parseInt(dati[0]);
             y = Integer.parseInt(dati[1]);
@@ -46,7 +47,7 @@ public class FileUploader {
 
             while ((currentLine = file.readLine()) != null) {
 
-                dati = currentLine.split("   ");
+                dati = currentLine.split(separatore);
 
                 x = Integer.parseInt(dati[0]);
                 y = Integer.parseInt(dati[1]);
@@ -56,6 +57,8 @@ public class FileUploader {
                 System.out.println(x + " " + y + " " + delivery + " " + pickup);
 
             }
+
+            file.close();
 
         } catch (Exception e) {
 
