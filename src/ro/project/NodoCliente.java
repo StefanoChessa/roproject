@@ -2,8 +2,14 @@ package ro.project;
 
 public class NodoCliente extends Nodo {
 
-    NodoCliente(int x,int y){
+    private int pickup, delivery;
+
+    NodoCliente(int x,int y, int delivery, int pickup){
         super(x,y);
+
+        this.pickup = pickup;
+        this.delivery = delivery;
+
     }
 
 }
