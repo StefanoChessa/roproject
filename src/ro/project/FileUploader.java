@@ -2,6 +2,7 @@ package ro.project;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 public class FileUploader {
 
@@ -12,6 +13,7 @@ public class FileUploader {
     private BufferedReader file;
     private String currentLine;
     private String separatore = "   ";
+    private ArrayList<NodoCliente> clienti;
 
     public FileUploader() {
         this.numeroClienti = 0;
@@ -19,6 +21,7 @@ public class FileUploader {
         this.capacitaVeicolo = 0;
         this.nodoDeposito = null;
         this.file = null;
+        clienti = new ArrayList<>();
     }
 
     public void caricaIstanza(String file_path) {
@@ -56,6 +59,7 @@ public class FileUploader {
 
                 System.out.println(x + " " + y + " " + delivery + " " + pickup);
 
+                clienti.add(new NodoCliente(x, y, delivery, pickup));
             }
 
             file.close();
@@ -66,4 +70,15 @@ public class FileUploader {
 
         }
     }
+
+    public ArrayList<NodoCliente> getClienti(){
+
+        return this.clienti;
+    }
+
+    public NodoDeposito getNodoDeposito(){
+
+        return this.nodoDeposito;
+    }
+
 }
