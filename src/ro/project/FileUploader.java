@@ -92,4 +92,30 @@ public class FileUploader {
 
     }
 
+    public ArrayList<NodoCliente> createLineHaulList(){
+        ArrayList<NodoCliente> lineHaulList = null;
+        for(NodoCliente cliente : this.getClienti()){
+            if(cliente.getDelivery() == 0){
+
+            }
+            else {
+                lineHaulList.add(cliente);
+            }
+        }
+        return lineHaulList;
+    }
+
+    public ArrayList<NodoCliente> createBackHaulList(){
+        ArrayList<NodoCliente> backHaulList = null;
+        for(NodoCliente cliente : this.getClienti()){
+            if(cliente.getPickup() == 0){
+
+            }
+            else {
+                backHaulList.add(cliente);
+            }
+        }
+        return  backHaulList;
+    }
+
 }
