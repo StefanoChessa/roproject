@@ -15,5 +15,8 @@ public class Main {
 
         file.caricaIstanza(filename);
 
+        MatriceDistanze matr = new MatriceDistanze(file.getTuttiNodi());
+        matr.creaMatrice();
+
     }
 }

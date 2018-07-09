@@ -12,4 +12,13 @@ public class NodoCliente extends Nodo {
 
     }
 
+    public int getPickup() {
+        return pickup;
+    }
+
+    public int getDelivery() {
+        return delivery;
+    }
+
+
 }

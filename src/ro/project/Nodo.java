@@ -17,6 +17,7 @@ public class Nodo {
     public int getY() {
         return y;
     }
+
     private void setX(int x) {
         this.x = x;
     }
