@@ -18,5 +18,7 @@ public class Main {
         MatriceDistanze matr = new MatriceDistanze(file.getTuttiNodi());
         matr.creaMatrice();
 
+        System.out.println("distanza: " + matr.getDistanza(0,1));
+
     }
 }

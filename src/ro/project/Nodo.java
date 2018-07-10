@@ -4,6 +4,9 @@ public class Nodo {
 
     private int x = 0;
     private int y = 0;
+
+
+
     private int id;
 
     public Nodo(int x, int y, int id) {
@@ -18,6 +21,10 @@ public class Nodo {
 
     public int getY() {
         return y;
+    }
+
+    public int getId() {
+        return id;
     }
 
     private void setX(int x) {

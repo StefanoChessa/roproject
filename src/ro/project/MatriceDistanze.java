@@ -44,4 +44,8 @@ public class MatriceDistanze {
         }
 
     }
+
+    public Double getDistanza(int nodo1, int nodo2){
+        return matriceDistanze[nodo1][nodo2];
+    }
 }
