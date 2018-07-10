@@ -7,12 +7,24 @@ public class MatriceDistanze {
     private ArrayList<NodoCliente> listaClienti;
     private ArrayList<Nodo> nodi;
     private NodoDeposito nodoDeposito;
-    private Double[][] matriceDistanze = null;
+    private static MatriceDistanze istanza=null;
+    private static Double[][] matriceDistanze = null;
 
     public MatriceDistanze(ArrayList<NodoCliente> listaClienti, NodoDeposito nodoDeposito) {
         this.listaClienti = listaClienti;
         this.nodoDeposito = nodoDeposito;
     }
+
+    public  MatriceDistanze(){}
+
+    public static MatriceDistanze getInstanza(){
+        if(istanza == null){
+            istanza = new MatriceDistanze();
+            return istanza;
+        }
+        return istanza;
+    }
+
 
     public MatriceDistanze(ArrayList<Nodo> nodi) {
         this.nodi = nodi;
@@ -47,5 +59,9 @@ public class MatriceDistanze {
 
     public Double getDistanza(int nodo1, int nodo2){
         return matriceDistanze[nodo1][nodo2];
+    }
+
+    public Double[][] getMatriceDistanze() {
+        return matriceDistanze;
     }
 }

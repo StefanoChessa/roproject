@@ -1,5 +1,6 @@
 package ro.project;
 
+
 import java.util.ArrayList;
 
 /**
@@ -9,11 +10,27 @@ public class Rotta {
     private ArrayList<Nodo> nodi;
     private Double costo= 0.0;
 
+
     public Rotta(){
         nodi=new ArrayList<>();
     }
 
     public void aggiungiAllaRotta(Nodo n){
 
+        if(nodi.size()>0) {
+             this.costo += MatriceDistanze.getInstanza().getDistanza(n.getId(),nodi.get(nodi.size()-1).getId());
+        }
+
+        this.nodi.add(n);
     }
+
+    public void chiudiRotta(){
+        Nodo deposito=nodi.get(0);
+        this.costo+=MatriceDistanze.getInstanza().getDistanza(deposito.getId(),nodi.get(nodi.size() - 1).getId());
+    }
+
+    public Double getCosto() {
+        return this.costo;
+    }
+
 }

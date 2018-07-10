@@ -29,7 +29,7 @@ public class FileUploader {
         try {
 
             int x, y, delivery, pickup = 0;
-            int i = 1;
+            int i = 0;
 
             file = new BufferedReader(
                     new FileReader("project_files/Instances/" + file_path + ".txt")
@@ -48,7 +48,7 @@ public class FileUploader {
             delivery = Integer.parseInt(dati[2]);
 
             nodoDeposito = new NodoDeposito(x, y, delivery,i);
-
+            i++;
             while ((currentLine = file.readLine()) != null) {
 
                 dati = currentLine.split(separatore);
