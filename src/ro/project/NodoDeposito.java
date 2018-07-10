@@ -4,8 +4,8 @@ public class NodoDeposito extends Nodo {
 
     private int capacitaVeicolo = 0;
 
-    public NodoDeposito(int x,int y,int capacitaVeicolo){
-        super(x,y);
+    public NodoDeposito(int x,int y,int capacitaVeicolo, int id){
+        super(x,y,id);
         this.capacitaVeicolo = capacitaVeicolo;
     }
 

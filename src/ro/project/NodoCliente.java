@@ -4,8 +4,8 @@ public class NodoCliente extends Nodo {
 
     private int pickup, delivery;
 
-    NodoCliente(int x,int y, int delivery, int pickup){
-        super(x,y);
+    NodoCliente(int x,int y, int delivery, int pickup, int id){
+        super(x,y,id);
 
         this.pickup = pickup;
         this.delivery = delivery;

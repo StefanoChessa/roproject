@@ -29,6 +29,7 @@ public class FileUploader {
         try {
 
             int x, y, delivery, pickup = 0;
+            int i = 1;
 
             file = new BufferedReader(
                     new FileReader("project_files/Instances/" + file_path + ".txt")
@@ -46,7 +47,7 @@ public class FileUploader {
             y = Integer.parseInt(dati[1]);
             delivery = Integer.parseInt(dati[2]);
 
-            nodoDeposito = new NodoDeposito(x, y, delivery);
+            nodoDeposito = new NodoDeposito(x, y, delivery,i);
 
             while ((currentLine = file.readLine()) != null) {
 
@@ -57,9 +58,10 @@ public class FileUploader {
                 delivery = Integer.parseInt(dati[2]);
                 pickup = Integer.parseInt(dati[3]);
 
-                //System.out.println(x + " " + y + " " + delivery + " " + pickup);
+                System.out.println(x + " " + y + " " + delivery + " " + pickup + " id: " + i);
 
-                clienti.add(new NodoCliente(x, y, delivery, pickup));
+                clienti.add(new NodoCliente(x, y, delivery, pickup,i));
+                i++;
             }
 
             file.close();

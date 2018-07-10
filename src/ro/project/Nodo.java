@@ -4,10 +4,12 @@ public class Nodo {
 
     private int x = 0;
     private int y = 0;
+    private int id;
 
-    public Nodo(int x, int y) {
+    public Nodo(int x, int y, int id) {
         this.setX(x);
         this.setY(y);
+        this.id=id;
     }
 
     public int getX() {
