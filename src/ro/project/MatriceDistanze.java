@@ -8,6 +8,9 @@ public class MatriceDistanze {
     private ArrayList<Nodo> nodi;
     private NodoDeposito nodoDeposito;
     private static MatriceDistanze istanza=null;
+
+
+
     private static Double[][] matriceDistanze = null;
 
     public MatriceDistanze(ArrayList<NodoCliente> listaClienti, NodoDeposito nodoDeposito) {
@@ -62,6 +65,7 @@ public class MatriceDistanze {
     }
 
     public Double[][] getMatriceDistanze() {
+
         return matriceDistanze;
     }
 }
