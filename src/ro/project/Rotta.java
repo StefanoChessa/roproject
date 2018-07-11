@@ -29,6 +29,7 @@ public class Rotta {
     public void chiudiRotta(){
         Nodo deposito=nodi.get(0);
         this.costo+=MatriceDistanze.getInstanza().getDistanza(deposito.getId(),nodi.get(nodi.size() - 1).getId());
+        this.nodi.add(deposito);
     }
 
     public Double getCosto() {

@@ -42,28 +42,26 @@ public class ListaRotte {
             for(int j=0; j<savingOrdinati.size();j++){
                 NodoCliente a=savingOrdinati.get(j).getNodoA();
                 NodoCliente b= savingOrdinati.get(j).getNodoB();
-              if(a.getDelivery()<veicoli[i].getCapacita() && a.getDelivery()!=0){
+
+              if(a.getDelivery()<veicoli[i].getCapacita() && linehaul.contains(a)){
                   r.aggiungiAllaRotta(a);
                   veicoli[i].setCapacita(veicoli[i].getCapacita() - a.getDelivery());
                   linehaul.remove(a);
                   //rimuovere il nodo dai lainhoul
-              }else{
-                  r.chiudiRotta();
               }
 
-                if(b.getDelivery()<veicoli[i].getCapacita() && b.getDelivery()!=0){
+                if(b.getDelivery()<veicoli[i].getCapacita() && linehaul.contains(b)){
                     r.aggiungiAllaRotta(b);
                     veicoli[i].setCapacita(veicoli[i].getCapacita() - b.getDelivery());
                     linehaul.remove(b);
-                }else{
-                    r.chiudiRotta();
                 }
 
 
             }
 
 
-
+            r.chiudiRotta();
+            listaRotte.add(r);
             System.out.println("ciao");
 
         }

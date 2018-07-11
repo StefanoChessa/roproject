@@ -23,4 +23,6 @@ public class Veicolo  {
     public void setCapacita(int capacita) {
         this.capacita = capacita;
     }
+
+
 }
