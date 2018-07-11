@@ -25,8 +25,13 @@ public class Main {
 
         ArrayList<SavingNodi> nodiSaving = matriceSavings.ordinaSaving();
 
+        Double valore = matriceSavings.getSavingAt(1,5);
+
         for(int i=0; i < nodiSaving.size(); i++){
-            System.out.println(nodiSaving.get(i).getSaving());
+            if (nodiSaving.get(i).getSaving() == valore){
+                System.out.println(nodiSaving.get(i).getNodoA().getId() + " " +
+                        nodiSaving.get(i).getNodoB().getId());
+            }
         }
 
     }
