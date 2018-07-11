@@ -20,6 +20,7 @@ public class Main {
 
         MatriceSavings matriceSavings = new MatriceSavings(file.getClienti(),file.getNodoDeposito());
         matriceSavings.calcolaMatriceSaving();
+        System.out.println(matriceSavings.getSavingAt(1,5));
 
     }
 }

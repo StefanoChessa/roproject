@@ -17,19 +17,20 @@ public class MatriceSavings {
     }
 
     public void calcolaMatriceSaving (){
-        for(int i = 0; i < nodi.size(); i++){
-            for (int j = 0; j < nodi.size(); j++){
+        for(int i = 0; i < nodi.size(); i++) {
+            for (int j = 0; j < nodi.size(); j++) {
                 NodoCliente primo = nodi.get(i);
                 NodoCliente secondo = nodi.get(j);
-                matriceSaving[i][j] = MatriceDistanze.getInstanza().getDistanza(primo.getId(),nodoDeposito.getId()) + MatriceDistanze.getInstanza().getDistanza(secondo.getId(),nodoDeposito.getId()) - MatriceDistanze.getInstanza().getDistanza(primo.getId(),secondo.getId()) ;
+                matriceSaving[i][j] = MatriceDistanze.getInstanza().getDistanza(primo.getId(), nodoDeposito.getId()) + MatriceDistanze.getInstanza().getDistanza(secondo.getId(), nodoDeposito.getId()) - MatriceDistanze.getInstanza().getDistanza(primo.getId(), secondo.getId());
             }
         }
-        System.out.println(matriceSaving[1][5]);
-        System.out.println(MatriceDistanze.getInstanza().getDistanza(0,1));
-        System.out.println(MatriceDistanze.getInstanza().getDistanza(0,5));
-        System.out.println(MatriceDistanze.getInstanza().getDistanza(1,5));
+
     }
 
+    public Double getSavingAt(int a, int b){
 
+        return matriceSaving[a-1][b-1];
+
+    }
 
 }
