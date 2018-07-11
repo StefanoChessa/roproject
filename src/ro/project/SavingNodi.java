@@ -6,7 +6,7 @@ public class SavingNodi {
     private Nodo nodoB;
     private Double saving;
 
-    public SavingNodi(NodoCliente a, NodoDeposito b, Double s){
+    public SavingNodi(NodoCliente a, NodoCliente b, Double s){
 
         this.setNodoA(a);
         this.setNodoB(b);

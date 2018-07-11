@@ -1,6 +1,8 @@
 package ro.project;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MatriceSavings {
 
@@ -31,6 +33,30 @@ public class MatriceSavings {
 
         return matriceSaving[a-1][b-1];
 
+    }
+
+    public ArrayList<SavingNodi> creaSaving(){
+
+        ArrayList<SavingNodi> listaNodi = new ArrayList<>();
+
+        for(int i = 0; i < nodi.size(); i++) {
+            for (int j = 0; j < nodi.size(); j++) {
+                listaNodi.add(new SavingNodi(nodi.get(i), nodi.get(j), getSavingAt(i,j)));
+            }
+        }
+
+        return listaNodi;
+    }
+
+    public ArrayList<SavingNodi> ordinaSaving(ArrayList<SavingNodi> listaSaving){
+
+        Collections.sort(listaSaving, new Comparator<SavingNodi>() {
+            public int compare(SavingNodi s1, SavingNodi s2) {
+                return s1.getSaving().compareTo(s2.getSaving());
+            }
+        });
+
+        return listaSaving;
     }
 
 }
