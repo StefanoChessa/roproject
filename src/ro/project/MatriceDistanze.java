@@ -64,8 +64,7 @@ public class MatriceDistanze {
         return matriceDistanze[nodo1][nodo2];
     }
 
-    public Double[][] getMatriceDistanze() {
 
-        return matriceDistanze;
-    }
+
+
 }

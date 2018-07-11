@@ -18,7 +18,7 @@ public class Main {
         MatriceDistanze matr = new MatriceDistanze(file.getTuttiNodi());
         matr.creaMatrice();
 
-        MatriceSavings matriceSavings = new MatriceSavings(file.getClienti(),file.getNodoDeposito(),MatriceDistanze.getInstanza());
+        MatriceSavings matriceSavings = new MatriceSavings(file.getClienti(),file.getNodoDeposito());
         matriceSavings.calcolaMatriceSaving();
 
     }
