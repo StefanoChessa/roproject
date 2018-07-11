@@ -41,18 +41,21 @@ public class MatriceSavings {
 
         for(int i = 0; i < nodi.size(); i++) {
             for (int j = 0; j < nodi.size(); j++) {
-                listaNodi.add(new SavingNodi(nodi.get(i), nodi.get(j), getSavingAt(i,j)));
+                listaNodi.add(new SavingNodi(nodi.get(i), nodi.get(j), getSavingAt(i+1,j+1)));
             }
         }
 
         return listaNodi;
     }
 
-    public ArrayList<SavingNodi> ordinaSaving(ArrayList<SavingNodi> listaSaving){
+    public ArrayList<SavingNodi> ordinaSaving(){
 
+        ArrayList<SavingNodi> listaSaving = creaSaving();
+
+        //ordinati al contrario
         Collections.sort(listaSaving, new Comparator<SavingNodi>() {
             public int compare(SavingNodi s1, SavingNodi s2) {
-                return s1.getSaving().compareTo(s2.getSaving());
+                return s2.getSaving().compareTo(s1.getSaving());
             }
         });
 

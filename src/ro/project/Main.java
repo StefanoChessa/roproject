@@ -1,5 +1,6 @@
 package ro.project;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -21,6 +22,12 @@ public class Main {
         MatriceSavings matriceSavings = new MatriceSavings(file.getClienti(),file.getNodoDeposito());
         matriceSavings.calcolaMatriceSaving();
         System.out.println(matriceSavings.getSavingAt(1,5));
+
+        ArrayList<SavingNodi> nodiSaving = matriceSavings.ordinaSaving();
+
+        for(int i=0; i < nodiSaving.size(); i++){
+            System.out.println(nodiSaving.get(i).getSaving());
+        }
 
     }
 }
