@@ -45,7 +45,9 @@ public class FileUploader {
 
             x = Integer.parseInt(dati[0]);
             y = Integer.parseInt(dati[1]);
-            delivery = Integer.parseInt(dati[2]);
+            delivery = Integer.parseInt(dati[3]);
+
+            capacitaVeicolo = delivery;
 
             nodoDeposito = new NodoDeposito(x, y, delivery,i);
             i++;
