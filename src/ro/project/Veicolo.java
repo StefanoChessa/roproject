@@ -1,18 +1,26 @@
 package ro.project;
 
-public class Veicolo extends NodoDeposito {
+public class Veicolo  {
 
-    int indice;
+    private int indice;
+    private int capacita;
 
-    public Veicolo(int x,int y,int capacitaVeicolo, int id, int indice){
-        super(x,y,capacitaVeicolo,id);
-
+    public Veicolo(int indice,int capacitaVeicolo){
+        this.indice=indice;
+        this.setCapacita(capacitaVeicolo);
     }
 
-    int getIndice(){
+
+    public int getIndice() {
         return indice;
     }
 
 
+    public int getCapacita() {
+        return capacita;
+    }
 
+    public void setCapacita(int capacita) {
+        this.capacita = capacita;
+    }
 }

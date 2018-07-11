@@ -23,15 +23,21 @@ public class ListaRotte {
         MatriceSavings matriceSavings=matrice;
         int numeroVeicoli=file.getNumeroVeicoli();
         int capacita=file.getCapacitaVeicolo();
+        Veicolo[] veicoli= new Veicolo[file.getNumeroVeicoli()];
         ArrayList<SavingNodi> savingOrdinati=new ArrayList<>();
         savingOrdinati=matriceSavings.ordinaSaving();
 
+        for(int n=0; n<numeroVeicoli;n++){
+            veicoli[n]=new Veicolo(n,capacita);
+        }
+
         for(int i=0; i<numeroVeicoli;i++){
+
             Rotta r= new Rotta(i);
             r.aggiungiAllaRotta(file.getTuttiNodi().get(0));
 
             for(int j=0; j<savingOrdinati.size();j++){
-                savingOrdinati.get(j).getNodoA().getDelivery()<
+//                savingOrdinati.get(j).getNodoA().getDelivery()<0;
             }
 
 
