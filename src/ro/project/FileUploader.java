@@ -95,7 +95,7 @@ public class FileUploader {
     }
 
     public ArrayList<NodoCliente> createLineHaulList(){
-        ArrayList<NodoCliente> lineHaulList = null;
+        ArrayList<NodoCliente> lineHaulList = new ArrayList<>();
         for(NodoCliente cliente : this.getClienti()){
             if(cliente.getDelivery() == 0){
 
@@ -108,7 +108,7 @@ public class FileUploader {
     }
 
     public ArrayList<NodoCliente> createBackHaulList(){
-        ArrayList<NodoCliente> backHaulList = null;
+        ArrayList<NodoCliente> backHaulList = new ArrayList<>();
         for(NodoCliente cliente : this.getClienti()){
             if(cliente.getPickup() == 0){
 
@@ -120,4 +120,15 @@ public class FileUploader {
         return  backHaulList;
     }
 
+    public int getNumeroClienti() {
+        return numeroClienti;
+    }
+
+    public int getNumeroVeicoli() {
+        return numeroVeicoli;
+    }
+
+    public int getCapacitaVeicolo() {
+        return capacitaVeicolo;
+    }
 }

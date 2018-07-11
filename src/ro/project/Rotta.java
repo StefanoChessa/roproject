@@ -7,11 +7,13 @@ import java.util.ArrayList;
  * Created by marco on 10/07/2018.
  */
 public class Rotta {
+    private int indiceVeicolo;
     private ArrayList<Nodo> nodi;
     private Double costo= 0.0;
 
 
-    public Rotta(){
+    public Rotta(int indice){
+        this.indiceVeicolo=indice;
         nodi=new ArrayList<>();
     }
 

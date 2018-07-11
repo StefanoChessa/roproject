@@ -16,6 +16,7 @@ public class Main {
 
         file.caricaIstanza(filename);
 
+
         MatriceDistanze matr = new MatriceDistanze(file.getTuttiNodi());
         matr.creaMatrice();
 
@@ -27,12 +28,15 @@ public class Main {
 
         Double valore = matriceSavings.getSavingAt(1,5);
 
-        for(int i=0; i < nodiSaving.size(); i++){
-            if (nodiSaving.get(i).getSaving() == valore){
-                System.out.println(nodiSaving.get(i).getNodoA().getId() + " " +
-                        nodiSaving.get(i).getNodoB().getId());
-            }
-        }
+//        for(int i=0; i < nodiSaving.size(); i++){
+//            if (nodiSaving.get(i).getSaving() == valore){
+//                System.out.println(nodiSaving.get(i).getNodoA().getId() + " " +
+//                        nodiSaving.get(i).getNodoB().getId());
+//            }
+//        }
+
+        ListaRotte lista= new ListaRotte();
+        lista.inizializza(file,matriceSavings);
 
     }
 }
