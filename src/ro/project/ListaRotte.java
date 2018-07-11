@@ -1,3 +1,4 @@
+//lainhoul=delivery
 package ro.project;
 
 import java.util.ArrayList;
@@ -23,7 +24,9 @@ public class ListaRotte {
         MatriceSavings matriceSavings=matrice;
         int numeroVeicoli=file.getNumeroVeicoli();
         int capacita=file.getCapacitaVeicolo();
+
         Veicolo[] veicoli= new Veicolo[file.getNumeroVeicoli()];
+
         ArrayList<SavingNodi> savingOrdinati=new ArrayList<>();
         savingOrdinati=matriceSavings.ordinaSaving();
 
@@ -37,8 +40,28 @@ public class ListaRotte {
             r.aggiungiAllaRotta(file.getTuttiNodi().get(0));
 
             for(int j=0; j<savingOrdinati.size();j++){
-//                savingOrdinati.get(j).getNodoA().getDelivery()<0;
+                NodoCliente a=savingOrdinati.get(j).getNodoA();
+                NodoCliente b= savingOrdinati.get(j).getNodoB();
+              if(a.getDelivery()<veicoli[i].getCapacita() && a.getDelivery()!=0){
+                  r.aggiungiAllaRotta(a);
+                  veicoli[i].setCapacita(veicoli[i].getCapacita() - a.getDelivery());
+                  linehaul.remove(a);
+                  //rimuovere il nodo dai lainhoul
+              }else{
+                  r.chiudiRotta();
+              }
+
+                if(b.getDelivery()<veicoli[i].getCapacita() && b.getDelivery()!=0){
+                    r.aggiungiAllaRotta(b);
+                    veicoli[i].setCapacita(veicoli[i].getCapacita() - b.getDelivery());
+                    linehaul.remove(b);
+                }else{
+                    r.chiudiRotta();
+                }
+
+
             }
+
 
 
             System.out.println("ciao");
