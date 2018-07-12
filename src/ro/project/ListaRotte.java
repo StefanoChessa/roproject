@@ -68,7 +68,7 @@ public class ListaRotte {
 
     public void inizializza(FileUploader instanza) {
 
-        this.nodiClienti = instanza.getClienti();
+        this.nodiClienti = instanza.getLineHaulList();
         this.nodoDeposito = instanza.getNodoDeposito();
 
         for (Nodo cliente : nodiClienti) {

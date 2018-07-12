@@ -44,4 +44,23 @@ public class Rotta {
         }
     }
 
+    public void rimuoviNodo(Nodo n){
+        MatriceDistanze m = MatriceDistanze.getInstanza();
+        Nodo deposito = nodi.get(0);
+        if(n.equals(deposito)){
+            this.costo -= m.getDistanza(nodi.get(nodi.size()-2).getId(),nodi.get(nodi.size()-1).getId());
+            nodi.remove(nodi.size()-1);
+        }else {
+
+            int index = nodi.indexOf(n);
+            this.costo -= m.getDistanza(nodi.get(index - 1).getId(), n.getId());
+            
+            if (index < nodi.size()) {
+                this.costo -= m.getDistanza(nodi.get(index + 1).getId(), n.getId());
+                this.costo+=m.getDistanza(nodi.get(index - 1).getId(),nodi.get(index + 1).getId());
+            }
+            this.nodi.remove(n);
+        }
+    }
+
 }
