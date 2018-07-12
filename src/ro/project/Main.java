@@ -36,20 +36,20 @@ public class Main {
 //            }
 //        }
 
-        ListaRotte lista= new ListaRotte();
-        lista.inizializza(file,matriceSavings);
-        ArrayList<Rotta> c=lista.ottieniRotte();
-
-        //prova di stampa dei nodi visitati da ogni rotta
-        int num=0;
-        for(Rotta a:c){
-            System.out.println("");
-            System.out.print("Rotta " + num + ": ");
-            a.stampaRotta(a.getNodi());
-            num++;
-        }
-
-        lista.exchange(c);
+//        ListaRotte lista= new ListaRotte();
+//        lista.inizializza(file,matriceSavings);
+//        ArrayList<Rotta> c=lista.ottieniRotte();
+//
+//        //prova di stampa dei nodi visitati da ogni rotta
+//        int num=0;
+//        for(Rotta a:c){
+//            System.out.println("");
+//            System.out.print("Rotta " + num + ": ");
+//            a.stampaRotta(a.getNodi());
+//            num++;
+//        }
+//
+//        lista.exchange(c);
 
     }
 }

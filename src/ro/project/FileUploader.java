@@ -13,7 +13,7 @@ public class FileUploader {
     private BufferedReader file;
     private String currentLine;
     private String separatore = "   ";
-    private ArrayList<NodoCliente> clienti;
+    private ArrayList<Nodo> clienti;
 
     public FileUploader() {
         this.numeroClienti = 0;
@@ -75,7 +75,7 @@ public class FileUploader {
         }
     }
 
-    public ArrayList<NodoCliente> getClienti(){
+    public ArrayList<Nodo> getClienti(){
 
         return this.clienti;
     }
@@ -96,31 +96,31 @@ public class FileUploader {
 
     }
 
-    public ArrayList<NodoCliente> createLineHaulList(){
-        ArrayList<NodoCliente> lineHaulList = new ArrayList<>();
-        for(NodoCliente cliente : this.getClienti()){
-            if(cliente.getDelivery() == 0){
+//    public ArrayList<NodoCliente> createLineHaulList(){
+//        ArrayList<NodoCliente> lineHaulList = new ArrayList<>();
+//        for(NodoCliente cliente : this.getClienti()){
+//            if(cliente.getDelivery() == 0){
+//
+//            }
+//            else {
+//                lineHaulList.add(cliente);
+//            }
+//        }
+//        return lineHaulList;
+//    }
 
-            }
-            else {
-                lineHaulList.add(cliente);
-            }
-        }
-        return lineHaulList;
-    }
-
-    public ArrayList<NodoCliente> createBackHaulList(){
-        ArrayList<NodoCliente> backHaulList = new ArrayList<>();
-        for(NodoCliente cliente : this.getClienti()){
-            if(cliente.getPickup() == 0){
-
-            }
-            else {
-                backHaulList.add(cliente);
-            }
-        }
-        return  backHaulList;
-    }
+//    public ArrayList<NodoCliente> createBackHaulList(){
+//        ArrayList<NodoCliente> backHaulList = new ArrayList<>();
+//        for(NodoCliente cliente : this.getClienti()){
+//            if(cliente.getPickup() == 0){
+//
+//            }
+//            else {
+//                backHaulList.add(cliente);
+//            }
+//        }
+//        return  backHaulList;
+//    }
 
     public int getNumeroClienti() {
         return numeroClienti;

@@ -2,11 +2,11 @@ package ro.project;
 
 public class SavingNodi {
 
-    private NodoCliente nodoA;
-    private NodoCliente nodoB;
+    private Nodo nodoA;
+    private Nodo nodoB;
     private Double saving;
 
-    public SavingNodi(NodoCliente a, NodoCliente b, Double s){
+    public SavingNodi(Nodo a, Nodo b, Double s){
 
         this.setNodoA(a);
         this.setNodoB(b);
@@ -15,19 +15,19 @@ public class SavingNodi {
     }
 
 
-    public NodoCliente getNodoA() {
+    public Nodo getNodoA() {
         return nodoA;
     }
 
-    public void setNodoA(NodoCliente nodoA) {
+    public void setNodoA(Nodo nodoA) {
         this.nodoA = nodoA;
     }
 
-    public NodoCliente getNodoB() {
+    public Nodo getNodoB() {
         return nodoB;
     }
 
-    public void setNodoB(NodoCliente nodoB) {
+    public void setNodoB(Nodo nodoB) {
         this.nodoB = nodoB;
     }
 
