@@ -36,4 +36,19 @@ public class Rotta {
         return this.costo;
     }
 
+    public ArrayList<Nodo> getNodi() {
+        return nodi;
+    }
+
+    public Rotta rimuoviNodo(){
+        //eliminare il nodo dalla rotta aggiornando il costo e aumentare nuovamente la capacità del veicolo
+        return this;
+    }
+
+    public void stampaRotta(ArrayList<Nodo> n){
+        for(Nodo a:n){
+            System.out.print(a.getId() + ",");
+        }
+    }
+
 }

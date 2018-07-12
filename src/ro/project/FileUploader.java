@@ -60,7 +60,7 @@ public class FileUploader {
                 delivery = Integer.parseInt(dati[2]);
                 pickup = Integer.parseInt(dati[3]);
 
-                System.out.println(x + " " + y + " " + delivery + " " + pickup + " id: " + i);
+                //System.out.println(x + " " + y + " " + delivery + " " + pickup + " id: " + i);
 
                 clienti.add(new NodoCliente(x, y, delivery, pickup,i));
                 i++;
