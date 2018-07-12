@@ -1,4 +1,4 @@
-//lainhoul=delivery
+//linehaul=delivery
 package ro.project;
 
 import java.util.ArrayList;
@@ -18,6 +18,8 @@ public class ListaRotte {
     public ListaRotte(){
       this.listaRotte= new ArrayList<>();
     }
+
+
 
     public void inizializza(FileUploader file, MatriceSavings matrice){
 
@@ -81,7 +83,7 @@ public class ListaRotte {
 
     }
 
-    public void excange(ArrayList<Rotta> r){
+    public void exchange(ArrayList<Rotta> r){
         Random rand = new Random();
 
         int index1 = rand.nextInt(r.size());
@@ -99,20 +101,8 @@ public class ListaRotte {
     }
 
 
-
-
-
-    public ArrayList<Rotta> otteiniRotte(){
+    public ArrayList<Rotta> ottieniRotte(){
         return this.listaRotte;
     }
-
-
-
-
-
-
-
-
-
 
 }

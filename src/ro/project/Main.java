@@ -38,7 +38,7 @@ public class Main {
 
         ListaRotte lista= new ListaRotte();
         lista.inizializza(file,matriceSavings);
-        ArrayList<Rotta> c=lista.otteiniRotte();
+        ArrayList<Rotta> c=lista.ottieniRotte();
 
         //prova di stampa dei nodi visitati da ogni rotta
         int num=0;
@@ -49,7 +49,7 @@ public class Main {
             num++;
         }
 
-        lista.excange(c);
+        lista.exchange(c);
 
     }
 }

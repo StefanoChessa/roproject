@@ -6,7 +6,8 @@ import java.util.ArrayList;
 /**
  * Created by marco on 10/07/2018.
  */
-public class Rotta {
+public class Rotta extends MainRotta {
+
     private int indiceVeicolo;
     private ArrayList<Nodo> nodi;
     private Double costo= 0.0;
