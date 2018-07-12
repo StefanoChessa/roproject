@@ -11,7 +11,7 @@ public class ListaRotte {
 
     private ArrayList<Rotta> listaRotte;
     private Double costoTotale = 0.0;
-    private ArrayList<Nodo> nodi;
+    private ArrayList<Nodo> nodiClienti;
     private Nodo nodoDeposito;
 
     public ListaRotte() {
@@ -66,10 +66,19 @@ public class ListaRotte {
 //        System.out.println("CostoTotale: " + costoTotale);
 //    }
 
-    public void inizializza(FileUploader instanza){
+    public void inizializza(FileUploader instanza) {
 
-        this.nodi = instanza.getClienti();
+        this.nodiClienti = instanza.getClienti();
         this.nodoDeposito = instanza.getNodoDeposito();
+
+        for (Nodo cliente : nodiClienti) {
+            Rotta r = new Rotta(-1);
+            r.aggiungiAllaRotta(nodoDeposito);
+            r.aggiungiAllaRotta(cliente);
+            r.aggiungiAllaRotta(nodoDeposito);
+            listaRotte.add(r);
+
+        }
     }
 
     public void relocate(ArrayList<Rotta> r) {

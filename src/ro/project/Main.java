@@ -27,19 +27,18 @@ public class Main {
 
         ArrayList<SavingNodi> nodiSaving = matriceSavings.ordinaSaving();
 
-       // Double valore = matriceSavings.getSavingAt(1,5);
+        Double valore = matriceSavings.getSavingAt(1,5);
 
-//        for(int i=0; i < nodiSaving.size(); i++){
-//            if (nodiSaving.get(i).getSaving() == valore){
-//                System.out.println(nodiSaving.get(i).getNodoA().getId() + " " +
-//                        nodiSaving.get(i).getNodoB().getId());
-//            }
-//        }
+        for(int i=0; i < nodiSaving.size(); i++){
+            if (nodiSaving.get(i).getSaving() == valore){
+                System.out.println(nodiSaving.get(i).getNodoA().getId() + " " +
+                        nodiSaving.get(i).getNodoB().getId());
+            }
+        }
 
-//        ListaRotte lista= new ListaRotte();
-//        lista.inizializza(file,matriceSavings);
-//        ArrayList<Rotta> c=lista.ottieniRotte();
-//
+        ListaRotte lista= new ListaRotte();
+        lista.inizializza(file);
+
 //        //prova di stampa dei nodi visitati da ogni rotta
 //        int num=0;
 //        for(Rotta a:c){
