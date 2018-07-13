@@ -1,6 +1,8 @@
 //lainhoul=delivery
 package ro.project;
 
+import sun.security.krb5.internal.crypto.Aes128;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -39,16 +41,17 @@ public class Main {
         ListaRotte lista= new ListaRotte();
         lista.inizializza(file);
 
-//        //prova di stampa dei nodi visitati da ogni rotta
-//        int num=0;
-//        for(Rotta a:c){
-//            System.out.println("");
-//            System.out.print("Rotta " + num + ": ");
-//            a.stampaRotta(a.getNodi());
-//            num++;
-//        }
-//
-//        lista.exchange(c);
+        //prova di stampa dei nodi visitati da ogni rotta
+        ArrayList<Rotta> c = lista.ottieniRotte();
+        int num=0;
+        for(Rotta a:c){
+            System.out.println("");
+            System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
+            a.stampaRotta(a.getNodi());
+            num++;
+        }
+
+        lista.exchange(c);
 
     }
 }

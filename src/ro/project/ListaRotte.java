@@ -9,13 +9,15 @@ import java.util.Random;
  */
 public class ListaRotte {
 
-    private ArrayList<Rotta> listaRotte;
+    private ArrayList<Rotta> listaRotteSingole;
+    private ArrayList<Rotta> listaRotteIniziali;
     private Double costoTotale = 0.0;
     private ArrayList<Nodo> nodiClienti;
     private Nodo nodoDeposito;
 
     public ListaRotte() {
-        this.listaRotte = new ArrayList<>();
+        this.listaRotteSingole = new ArrayList<>();
+        this.listaRotteIniziali = new ArrayList<>();
     }
 
 //    public void inizializza(FileUploader file, MatriceSavings matrice) {
@@ -58,7 +60,7 @@ public class ListaRotte {
 //            }
 //            r.chiudiRotta();
 //            costoTotale += r.getCosto();
-//            listaRotte.add(r);
+//            listaRotteSingole.add(r);
 //            System.out.println("rotta: " + i + " costo: " + r.getCosto());
 //            // System.out.println(linehaul.size());
 //
@@ -66,19 +68,36 @@ public class ListaRotte {
 //        System.out.println("CostoTotale: " + costoTotale);
 //    }
 
-    public void inizializza(FileUploader instanza) {
+    public void inizializza(FileUploader istanza) {
 
-        this.nodiClienti = instanza.getLineHaulList();
-        this.nodoDeposito = instanza.getNodoDeposito();
+        this.nodiClienti = istanza.getLineHaulList();
+        this.nodoDeposito = istanza.getNodoDeposito();
 
         for (Nodo cliente : nodiClienti) {
             Rotta r = new Rotta(-1);
-            r.aggiungiAllaRotta(nodoDeposito);
+//            r.aggiungiAllaRotta(nodoDeposito);
             r.aggiungiAllaRotta(cliente);
-            r.aggiungiAllaRotta(nodoDeposito);
-            listaRotte.add(r);
+//            r.aggiungiAllaRotta(nodoDeposito);
+            listaRotteSingole.add(r);
 
         }
+
+        for(int i = 0; i< istanza.getNumeroVeicoli(); i++){
+            Rotta rottaIniziale = listaRotteSingole.get(0);
+            rottaIniziale.setIndiceVeicolo(i+1);
+            listaRotteIniziali.add(rottaIniziale);
+            listaRotteSingole.remove(0);
+        }
+
+        for(int i = 0; i< istanza.getNumeroVeicoli(); i++){
+            
+        }
+
+    }
+
+    public Rotta merge(Rotta r1, Rotta r2){
+
+        return null;
     }
 
     public void relocate(ArrayList<Rotta> r) {
@@ -100,7 +119,7 @@ public class ListaRotte {
 
 
     public ArrayList<Rotta> ottieniRotte() {
-        return this.listaRotte;
+        return this.listaRotteIniziali;
     }
 
 }

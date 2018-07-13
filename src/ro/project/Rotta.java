@@ -13,7 +13,7 @@ public class Rotta {
 
 
     public Rotta(int indice) {
-        this.indiceVeicolo = indice;
+        this.setIndiceVeicolo(indice);
         nodi = new ArrayList<>();
     }
 
@@ -63,4 +63,11 @@ public class Rotta {
         }
     }
 
+    public int getIndiceVeicolo() {
+        return indiceVeicolo;
+    }
+
+    public void setIndiceVeicolo(int indiceVeicolo) {
+        this.indiceVeicolo = indiceVeicolo;
+    }
 }
