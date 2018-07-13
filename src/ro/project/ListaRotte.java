@@ -15,9 +15,16 @@ public class ListaRotte {
     private ArrayList<Nodo> nodiClienti;
     private Nodo nodoDeposito;
 
+    public ArrayList<Veicolo> getVeicoli() {
+        return veicoli;
+    }
+
+    private ArrayList<Veicolo> veicoli;
+
     public ListaRotte() {
         this.listaRotteSingole = new ArrayList<>();
         this.listaRotteIniziali = new ArrayList<>();
+        this.veicoli = new ArrayList<>();
     }
 
 //    public void inizializza(FileUploader file, MatriceSavings matrice) {
@@ -72,7 +79,6 @@ public class ListaRotte {
 
         this.nodiClienti = istanza.getLineHaulList();
         this.nodoDeposito = istanza.getNodoDeposito();
-
         for (Nodo cliente : nodiClienti) {
             Rotta r = new Rotta(-1);
 //            r.aggiungiAllaRotta(nodoDeposito);
@@ -86,19 +92,30 @@ public class ListaRotte {
             Rotta rottaIniziale = listaRotteSingole.get(0);
             rottaIniziale.setIndiceVeicolo(i+1);
             listaRotteIniziali.add(rottaIniziale);
+            Veicolo veicolo = new Veicolo(i+1, istanza.getCapacitaVeicolo());
+            //Sottraggo alla capaità totale del veicolo, la capacità del primo nodo della prima rotta
+            int newCapacita = veicolo.getCapacita() - ((NodoCliente)(rottaIniziale.getNodi().get(0))).getDelivery();
+            veicolo.setCapacita(newCapacita);
+            veicoli.add(veicolo);
             listaRotteSingole.remove(0);
         }
+        while(listaRotteSingole.size()>0){
+            for(int i = 0; i< istanza.getNumeroVeicoli() && listaRotteSingole.size()>0; i++){
 
-        for(int i = 0; i< istanza.getNumeroVeicoli(); i++){
-            
+                int random = (new Random()).nextInt(listaRotteSingole.size());
+                Rotta rottaTemp = listaRotteSingole.get(random);
+                int capacitaNodo = ((NodoCliente)rottaTemp.getNodi().get(0)).getDelivery();
+                if(veicoli.get(i).getCapacita()>capacitaNodo){
+                    listaRotteIniziali.get(i).merge(rottaTemp);
+                    veicoli.get(i).setCapacita(veicoli.get(i).getCapacita()-capacitaNodo);
+                    listaRotteSingole.remove(random);
+                }
+            }
         }
 
     }
 
-    public Rotta merge(Rotta r1, Rotta r2){
 
-        return null;
-    }
 
     public void relocate(ArrayList<Rotta> r) {
     }
@@ -121,5 +138,7 @@ public class ListaRotte {
     public ArrayList<Rotta> ottieniRotte() {
         return this.listaRotteIniziali;
     }
+
+
 
 }

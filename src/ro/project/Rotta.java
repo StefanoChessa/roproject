@@ -70,4 +70,11 @@ public class Rotta {
     public void setIndiceVeicolo(int indiceVeicolo) {
         this.indiceVeicolo = indiceVeicolo;
     }
+
+    public void merge(Rotta r2){
+        for(Nodo n : r2.getNodi()){
+            this.aggiungiAllaRotta(n);
+        }
+    }
+
 }

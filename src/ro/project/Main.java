@@ -47,7 +47,9 @@ public class Main {
         for(Rotta a:c){
             System.out.println("");
             System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
+
             a.stampaRotta(a.getNodi());
+            System.out.print(" Capacita = " + lista.getVeicoli().get(a.getIndiceVeicolo()-1).getCapacita());
             num++;
         }
 
