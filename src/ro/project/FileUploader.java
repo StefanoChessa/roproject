@@ -108,18 +108,18 @@ public class FileUploader {
         return lineHaulList;
     }
 
-//    public ArrayList<NodoCliente> createBackHaulList(){
-//        ArrayList<NodoCliente> backHaulList = new ArrayList<>();
-//        for(NodoCliente cliente : this.getClienti()){
-//            if(cliente.getPickup() == 0){
-//
-//            }
-//            else {
-//                backHaulList.add(cliente);
-//            }
-//        }
-//        return  backHaulList;
-//    }
+    public ArrayList<Nodo> getBackHaulList(){
+        ArrayList<Nodo> backHaulList = new ArrayList<>();
+        for(Nodo cliente : this.getClienti()){
+            if(((NodoCliente)cliente).getPickup() == 0){
+
+            }
+            else {
+                backHaulList.add(cliente);
+            }
+        }
+        return backHaulList;
+    }
 
     public int getNumeroClienti() {
         return numeroClienti;

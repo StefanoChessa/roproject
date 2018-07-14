@@ -1,8 +1,6 @@
 //lainhoul=delivery
 package ro.project;
 
-import sun.security.krb5.internal.crypto.Aes128;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -38,8 +36,9 @@ public class Main {
             }
         }
 
-        ListaRotte lista= new ListaRotte();
-        lista.inizializza(file);
+        ListaRotte lista = new ListaRotte();
+        lista.inizializzaLineHaul(file);
+        lista.inizializzaBackHaul(file);
 
         //prova di stampa dei nodi visitati da ogni rotta
         ArrayList<Rotta> c = lista.ottieniRotte();
@@ -52,8 +51,19 @@ public class Main {
             System.out.print(" Capacita = " + lista.getVeicoli().get(a.getIndiceVeicolo()-1).getCapacita());
             num++;
         }
+        System.out.println();
+        System.out.println("______________________________________________________");
+        ArrayList<Rotta> b = lista.ottieniRotteBH();
+        num=0;
+        for(Rotta a:b){
+            System.out.println("");
+            System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
 
-        lista.exchange(c);
+            a.stampaRotta(a.getNodi());
+            System.out.print(" Capacita = " + lista.getVeicoliBH().get(a.getIndiceVeicolo()-1).getCapacita());
+            num++;
+        }
+        lista.exchange(b);
 
     }
 }
