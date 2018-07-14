@@ -42,14 +42,17 @@ public class Main {
 
         //prova di stampa dei nodi visitati da ogni rotta
         ArrayList<Rotta> c = lista.ottieniRotte();
-        int num=0;
+        int num=0; //TODO aggiungere visualizzazione del nodo deposito all'inizio e alla fine
         for(Rotta a:c){
             System.out.println("");
             System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
-
             a.stampaRotta(a.getNodi());
-            System.out.print(" Capacita = " + lista.getVeicoli().get(a.getIndiceVeicolo()-1).getCapacita());
+            System.out.print(" Capacita = " + a.getCapacitaVeicolo());// lista.getVeicoli().get(a.getIndiceVeicolo()-1).getCapacita());
             num++;
+            System.out.println();
+            System.out.println("Costo prima = " + a.getCosto());
+            a.aggiornaCosto();
+            System.out.println("Costo dopo = " + a.getCosto());
         }
         System.out.println();
         System.out.println("______________________________________________________");
@@ -60,10 +63,11 @@ public class Main {
             System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
 
             a.stampaRotta(a.getNodi());
-            System.out.print(" Capacita = " + lista.getVeicoliBH().get(a.getIndiceVeicolo()-1).getCapacita());
+            System.out.print(" Capacita = " + a.getCapacitaVeicolo());
             num++;
         }
         lista.exchange(b);
+
 
     }
 }

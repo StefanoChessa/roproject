@@ -10,6 +10,7 @@ public class Rotta {
     private int indiceVeicolo;
     private ArrayList<Nodo> nodi;
     private Double costo = 0.0;
+    private int capacitaVeicolo = 0;
 
 
     public Rotta(int indice) {
@@ -45,22 +46,16 @@ public class Rotta {
     }
 
     public void rimuoviNodo(Nodo n){
-        MatriceDistanze m = MatriceDistanze.getInstanza();
-        Nodo deposito = nodi.get(0);
-        if(n.equals(deposito)){
-            this.costo -= m.getDistanza(nodi.get(nodi.size()-2).getId(),nodi.get(nodi.size()-1).getId());
-            nodi.remove(nodi.size()-1);
-        }else {
+        this.nodi.remove(n);
+        aggiornaCosto();
+    }
 
-            int index = nodi.indexOf(n);
-            this.costo -= m.getDistanza(nodi.get(index - 1).getId(), n.getId());
-            
-            if (index < nodi.size()) {
-                this.costo -= m.getDistanza(nodi.get(index + 1).getId(), n.getId());
-                this.costo+=m.getDistanza(nodi.get(index - 1).getId(),nodi.get(index + 1).getId());
-            }
-            this.nodi.remove(n);
-        }
+    public void aggiungiNodo(Nodo nodo, int i){
+        this.nodi.add(i,nodo);
+    }
+
+    public void replace(Rotta r2, int i1, int i2){
+
     }
 
     public int getIndiceVeicolo() {
@@ -77,4 +72,22 @@ public class Rotta {
         }
     }
 
+    public void aggiornaCosto(){
+        this.costo = 0.0;
+        costo += MatriceDistanze.getInstanza().getDistanza(0,this.getNodi().get(0).getId());
+        for(int i = 0; i<this.getNodi().size()-1;i++){
+            this.costo += MatriceDistanze.getInstanza().getDistanza(
+                    this.getNodi().get(i).getId(),
+                    this.getNodi().get(i+1).getId());
+        }
+        //TODO Aggiungere alla fine il nodo deposito
+    }
+
+    public void setCapacitaVeicolo(int capacitaVeicolo) {
+        this.capacitaVeicolo=capacitaVeicolo;
+    }
+
+    public int getCapacitaVeicolo() {
+        return this.capacitaVeicolo;
+    }
 }

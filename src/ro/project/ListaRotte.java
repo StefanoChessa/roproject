@@ -19,65 +19,17 @@ public class ListaRotte {
     private ArrayList<Nodo> nodiClienti;
     private ArrayList<Nodo> nodiClientiBackHaul;
     private Nodo nodoDeposito;
-    private ArrayList<Veicolo> veicoli;
-    private ArrayList<Veicolo> veicoliBH;
+    //private ArrayList<Veicolo> veicoli;
+    //private ArrayList<Veicolo> veicoliBH;
 
     public ListaRotte() {
         this.listaRotteSingole = new ArrayList<>();
         this.listaRotteIniziali = new ArrayList<>();
         this.listaRotteSingoleBackHaul = new ArrayList<>();
         this.listaRotteInizialiBackHaul = new ArrayList<>();
-        this.veicoli = new ArrayList<>();
-        this.veicoliBH = new ArrayList<>();
+        //this.veicoli = new ArrayList<>();
+        //this.veicoliBH = new ArrayList<>();
     }
-
-//    public void inizializzaLineHaul(FileUploader file, MatriceSavings matrice) {
-//
-//        ArrayList<NodoCliente> linehaul = file.createLineHaulList();
-//        ArrayList<NodoCliente> backhaul = file.createBackHaulList();
-//        MatriceSavings matriceSavings = matrice;
-//        int numeroVeicoli = file.getNumeroVeicoli();
-//        int capacita = file.getCapacitaVeicolo();
-//
-//        Veicolo[] veicoli = new Veicolo[file.getNumeroVeicoli()];//creo un vettore di veicoli di dimensione pari al numero Totale Veicoli
-//
-//        ArrayList<SavingNodi> savingOrdinati = new ArrayList<>();
-//        savingOrdinati = matriceSavings.ordinaSaving();
-//
-//        for (int n = 0; n < numeroVeicoli; n++) {
-//            veicoli[n] = new Veicolo(n, capacita);
-//        }
-//
-//        for (int i = 0; i < numeroVeicoli; i++) {
-//
-//            Rotta r = new Rotta(i);
-//            r.aggiungiAllaRotta(file.getTuttiNodi().get(0));
-//
-//            for (int j = 0; j < savingOrdinati.size(); j++) {
-//                NodoCliente a = savingOrdinati.get(j).getNodoA();
-//                NodoCliente b = savingOrdinati.get(j).getNodoB();
-//
-//                if (a.getDelivery() < veicoli[i].getCapacita() && linehaul.contains(a)) {
-//                    r.aggiungiAllaRotta(a);
-//                    veicoli[i].setCapacita(veicoli[i].getCapacita() - a.getDelivery());
-//                    linehaul.remove(a);
-//                }
-//
-//                if (b.getDelivery() < veicoli[i].getCapacita() && linehaul.contains(b)) {
-//                    r.aggiungiAllaRotta(b);
-//                    veicoli[i].setCapacita(veicoli[i].getCapacita() - b.getDelivery());
-//                    linehaul.remove(b);
-//                }
-//            }
-//            r.chiudiRotta();
-//            costoTotale += r.getCosto();
-//            listaRotteSingole.add(r);
-//            System.out.println("rotta: " + i + " costo: " + r.getCosto());
-//            // System.out.println(linehaul.size());
-//
-//        }
-//        System.out.println("CostoTotale: " + costoTotale);
-//    }
 
     public void inizializzaLineHaul(FileUploader istanza) {
 
@@ -94,11 +46,12 @@ public class ListaRotte {
             Rotta rottaIniziale = listaRotteSingole.get(0);
             rottaIniziale.setIndiceVeicolo(i+1);
             listaRotteIniziali.add(rottaIniziale);
-            Veicolo veicolo = new Veicolo(i+1, istanza.getCapacitaVeicolo());
+            rottaIniziale.setCapacitaVeicolo(istanza.getCapacitaVeicolo());
+            //Veicolo veicolo = new Veicolo(i+1, istanza.getCapacitaVeicolo());
             //Sottraggo alla capaità totale del veicolo, la capacità del primo nodo della prima rotta
-            int newCapacita = veicolo.getCapacita() - ((NodoCliente)(rottaIniziale.getNodi().get(0))).getDelivery();
-            veicolo.setCapacita(newCapacita);
-            veicoli.add(veicolo);
+            int newCapacita = rottaIniziale.getCapacitaVeicolo() - ((NodoCliente)(rottaIniziale.getNodi().get(0))).getDelivery();
+            rottaIniziale.setCapacitaVeicolo(newCapacita);
+            //veicoli.add(veicolo);
             listaRotteSingole.remove(0);
         }
         while(listaRotteSingole.size()>0){
@@ -107,9 +60,9 @@ public class ListaRotte {
                 int random = (new Random()).nextInt(listaRotteSingole.size());
                 Rotta rottaTemp = listaRotteSingole.get(random);
                 int capacitaNodo = ((NodoCliente)rottaTemp.getNodi().get(0)).getDelivery();
-                if(veicoli.get(i).getCapacita()>capacitaNodo){
+                if(listaRotteIniziali.get(i).getCapacitaVeicolo()>capacitaNodo){
                     listaRotteIniziali.get(i).merge(rottaTemp);
-                    veicoli.get(i).setCapacita(veicoli.get(i).getCapacita()-capacitaNodo);
+                    listaRotteIniziali.get(i).setCapacitaVeicolo(listaRotteIniziali.get(i).getCapacitaVeicolo()-capacitaNodo);
                     listaRotteSingole.remove(random);
                 }
             }
@@ -133,11 +86,10 @@ public class ListaRotte {
             Rotta rottaIniziale = listaRotteSingoleBackHaul.get(0);
             rottaIniziale.setIndiceVeicolo(i+1);
             listaRotteInizialiBackHaul.add(rottaIniziale);
-            Veicolo veicolo = new Veicolo(i+1, istanza.getCapacitaVeicolo());
-            //Sottraggo alla capaità totale del veicolo, la capacità del primo nodo della prima rotta
-            int newCapacita = veicolo.getCapacita() - ((NodoCliente)(rottaIniziale.getNodi().get(0))).getPickup();
-            veicolo.setCapacita(newCapacita);
-            veicoliBH.add(veicolo);
+            rottaIniziale.setCapacitaVeicolo(istanza.getCapacitaVeicolo());
+            int newCapacita = rottaIniziale.getCapacitaVeicolo() - ((NodoCliente)(rottaIniziale.getNodi().get(0))).getPickup();
+            rottaIniziale.setCapacitaVeicolo(newCapacita);
+            //veicoliBH.add(veicolo);
             listaRotteSingoleBackHaul.remove(0);
             //int y =8+1; //TODO DA RIMUOVERE
             //System.out.print("|");
@@ -149,9 +101,9 @@ public class ListaRotte {
                 int random = (new Random()).nextInt(listaRotteSingoleBackHaul.size());
                 Rotta rottaTemp = listaRotteSingoleBackHaul.get(random);
                 int capacitaNodo = ((NodoCliente) rottaTemp.getNodi().get(0)).getPickup();
-                if (veicoliBH.get(i).getCapacita() > capacitaNodo) {
+                if (listaRotteInizialiBackHaul.get(i).getCapacitaVeicolo() > capacitaNodo) {
                     listaRotteInizialiBackHaul.get(i).merge(rottaTemp);
-                    veicoliBH.get(i).setCapacita(veicoliBH.get(i).getCapacita() - capacitaNodo);
+                    listaRotteInizialiBackHaul.get(i).setCapacitaVeicolo(listaRotteInizialiBackHaul.get(i).getCapacitaVeicolo() - capacitaNodo);
                     listaRotteSingoleBackHaul.remove(random);
                     int y = 8 + 1; //TODO DA RIMUOVERE
                 }
@@ -185,11 +137,5 @@ public class ListaRotte {
         return this.listaRotteInizialiBackHaul;
     }
 
-    public ArrayList<Veicolo> getVeicoli() {
-        return veicoli;
-    }
-    public ArrayList<Veicolo> getVeicoliBH() {
-        return veicoliBH;
-    }
 
 }
