@@ -47,16 +47,18 @@ public class Rotta {
 
     public void rimuoviNodo(Nodo n){
         this.nodi.remove(n);
-        aggiornaCosto();
+        this.aggiornaCosto();
     }
 
     public void aggiungiNodo(Nodo nodo, int i){
         this.nodi.add(i,nodo);
+        this.aggiornaCosto();
     }
 
     public void replace(Rotta r2, int i1, int i2){
 
     }
+
 
     public int getIndiceVeicolo() {
         return indiceVeicolo;

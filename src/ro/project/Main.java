@@ -66,7 +66,7 @@ public class Main {
             System.out.print(" Capacita = " + a.getCapacitaVeicolo());
             num++;
         }
-        lista.exchange(b);
+        lista.exchange();
 
 
     }

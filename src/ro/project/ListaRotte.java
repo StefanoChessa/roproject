@@ -1,6 +1,7 @@
 //linehaul=delivery
 package ro.project;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import sun.security.krb5.internal.crypto.Aes128;
 
 import java.util.ArrayList;
@@ -137,5 +138,71 @@ public class ListaRotte {
         return this.listaRotteInizialiBackHaul;
     }
 
+
+    public void exchange(){
+        int indiceRotta = -1, indiceNodo = -1;
+        double costoTotaleTemp = this.getCostoTotale();
+        for(Rotta r1: this.ottieniRotte()){
+            for (Nodo n1: r1.getNodi()){
+                for(Rotta r2: this.ottieniRotte()){
+                    for(Nodo n2: r2.getNodi()){
+                        if(!n1.equals(n2)){
+                            Rotta temp1, temp2;
+                            temp1 = r1;
+                            temp2 = r2;
+                            if(scambia(r1,n1,r2,n2)){
+                                if(this.getCostoTotale()<costoTotaleTemp){
+                                    costoTotaleTemp = this.getCostoTotale();
+                                    indiceRotta = this.ottieniRotte().indexOf(r2);
+                                    indiceNodo = r2.getNodi().indexOf(n2);
+                                }
+                            }
+                            r1 = temp1;
+                            r2 = temp2;
+                        }
+                    }
+                }
+                Rotta conveniente = this.ottieniRotte().get(indiceRotta);
+                scambia(r1,n1, conveniente, conveniente.getNodi().get(indiceNodo));
+            }
+        }
+    }
+
+    public double getCostoTotale(){
+        double tot = 0;
+        for (Rotta r : this.ottieniRotte())
+            tot += r.getCosto();
+        return tot;
+    }
+
+    private Boolean scambia(Rotta r1, Nodo n1, Rotta r2, Nodo n2){
+        Rotta temp1, temp2;
+        temp1 = r1;
+        temp2 = r2;
+        int iNodo1, iNodo2;
+        int cap1, cap2;
+        iNodo1 = r1.getNodi().indexOf(n1);
+        iNodo2 = r2.getNodi().indexOf(n2);
+        cap1 = ((NodoCliente)n1).getDelivery();
+        cap2 = ((NodoCliente)n2).getDelivery();
+        temp1.rimuoviNodo(n1);
+        temp1.setCapacitaVeicolo(temp1.getCapacitaVeicolo()+cap1);
+        if(temp1.getCapacitaVeicolo()-cap2>0){
+            temp2.rimuoviNodo(n2);
+            temp2.setCapacitaVeicolo(temp2.getCapacitaVeicolo()+cap2);
+            if(temp2.getCapacitaVeicolo()-cap1>0){
+                temp1.aggiungiNodo(n2,iNodo2);
+                temp2.aggiungiNodo(n1,iNodo1);
+                r1=temp1;
+                r2=temp2;
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+
+    }
 
 }
