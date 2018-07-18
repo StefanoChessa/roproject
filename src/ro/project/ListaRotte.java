@@ -145,39 +145,44 @@ public class ListaRotte {
     public void bestExchange(){
         double tempCosto = this.getCostoTotale();
         int n1 = -1, n2 = -1;
+        boolean flag = false;
         try {
-            ListaRotte l2 = new ListaRotte();
-            l2.setListaRotte((ArrayList<Rotta>) this.ottieniRotte().clone());
+            do {
+                ListaRotte l2 = new ListaRotte();
+                l2.setListaRotte((ArrayList<Rotta>) this.ottieniRotte().clone());
 
-            for (int i = 0; i < this.ottieniRotte().size(); i++){
-                for (int j = 0; j < this.ottieniRotte().get(i).getNodi().size(); j++){
-                    for(int k = 0; k<this.ottieniRotte().size(); k++){
-                        for(int l = 0; l < this.ottieniRotte().get(k).getNodi().size(); l++){
-                            l2.scambia( this.ottieniRotte().get(i).getNodi().get(j).getId(),
+                flag = false;
+                for (int i = 0; i < this.ottieniRotte().size(); i++) {
+                    for (int j = 0; j < this.ottieniRotte().get(i).getNodi().size(); j++) {
+                        for (int k = 0; k < this.ottieniRotte().size(); k++) {
+                            for (int l = 0; l < this.ottieniRotte().get(k).getNodi().size(); l++) {
+                                l2.scambia(this.ottieniRotte().get(i).getNodi().get(j).getId(),
                                         this.ottieniRotte().get(k).getNodi().get(l).getId());
 
-                            if (l2.getCostoTotale()<tempCosto){
-                                tempCosto = l2.getCostoTotale();
-                                n1 = this.ottieniRotte().get(i).getNodi().get(j).getId();
-                                n2 = this.ottieniRotte().get(k).getNodi().get(l).getId();
+                                if (l2.getCostoTotale() < tempCosto) {
+                                    tempCosto = l2.getCostoTotale();
+                                    n1 = this.ottieniRotte().get(i).getNodi().get(j).getId();
+                                    n2 = this.ottieniRotte().get(k).getNodi().get(l).getId();
+                                    flag = true;
 
+                                }
+                                l2.scambia(this.ottieniRotte().get(k).getNodi().get(l).getId(),
+                                        this.ottieniRotte().get(i).getNodi().get(j).getId());
                             }
-                            l2.scambia( this.ottieniRotte().get(k).getNodi().get(l).getId(),
-                                    this.ottieniRotte().get(i).getNodi().get(j).getId());
                         }
-                    }
 
+                    }
+                    if (n1 >= 0 && n2 >= 0) {
+                        this.scambia(n1, n2);
+                        n1 = n2 = -1;
+                        this.setListaRotte(l2.ottieniRotte());
+                    }
                 }
-                if(n1>=0 && n2 >=0){
-                    this.scambia(n1,n2);
-                    n1 = n2 = -1;
-                    this.setListaRotte(l2.ottieniRotte());
-                }
-            }
+            }while(flag);
         } catch (Exception e) {
-        System.out.println("ERRORE nella clonazione dell'oggetto di tipo ListaRotte");
-        e.printStackTrace();
-    }
+            System.out.println("ERRORE nella clonazione dell'oggetto di tipo ListaRotte");
+            e.printStackTrace();
+        }
     }
 
     public double getCostoTotale(){
