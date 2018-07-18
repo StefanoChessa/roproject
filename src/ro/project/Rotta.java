@@ -86,9 +86,7 @@ public class Rotta {
         //TODO Aggiungere alla fine il nodo deposito
     }
 
-    public void setCapacitaVeicolo(int capacitaVeicolo) {
-        this.capacitaVeicolo=capacitaVeicolo;
-    }
+    public void setCapacitaVeicolo(int capacitaVeicolo) { this.capacitaVeicolo=capacitaVeicolo; }
 
     public int getCapacitaVeicolo() {
         return this.capacitaVeicolo;

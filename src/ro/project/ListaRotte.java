@@ -183,18 +183,23 @@ public class ListaRotte {
                 for (int j = 0; j < this.ottieniRotte().get(i).getNodi().size(); j++){
                     for(int k = 0; k<this.ottieniRotte().size(); k++){
                         for(int l = 0; l < this.ottieniRotte().get(k).getNodi().size(); l++){
-                            l2.scambia(this.ottieniRotte().get(i).getNodi().get(j).getId(),this.ottieniRotte().get(k).getNodi().get(l).getId());
+                            l2.scambia( this.ottieniRotte().get(i).getNodi().get(j).getId(),
+                                        this.ottieniRotte().get(k).getNodi().get(l).getId());
 
                             if (l2.getCostoTotale()<tempCosto){
                                 tempCosto = l2.getCostoTotale();
                                 n1 = this.ottieniRotte().get(i).getNodi().get(j).getId();
                                 n2 = this.ottieniRotte().get(k).getNodi().get(l).getId();
+                            } else {
+                                l2.scambia( this.ottieniRotte().get(k).getNodi().get(l).getId(),
+                                            this.ottieniRotte().get(i).getNodi().get(j).getId());
                             }
                         }
                     }
                     if(n1>=0 && n2 >=0){
                         this.scambia(n1,n2);
-                        System.out.println("Eseguo lo scambio dei nodi " + n1 + " e " + n2);
+                        //System.out.println("Eseguo lo scambio dei nodi " + n1 + " e " + n2);
+                        n1 = n2 = -1;
                     }
                 }
             }
@@ -259,17 +264,19 @@ public class ListaRotte {
     public boolean scambia(int id1, int id2){
         Nodo temp = this.findNodoById(id1);
         Rotta a,b;
-        System.out.println("a = " + id1 + ", b = "+ id2);
+        //System.out.println("a = " + id1 + ", b = "+ id2);
         a = this.ottieniRotte().get(this.findRottaByNodo(findNodoById(id1)));
         b = this.ottieniRotte().get(this.findRottaByNodo(findNodoById(id2)));
         if(id1!=id2) {
             if (a.equals(b)) {
                 //scambia i due nodi senza aggiornare la capacità residua
-                System.out.println("");
-                System.out.println("a.getNodi().indexOf(temp) = " + a.getNodi().indexOf(temp));
-                System.out.println("findNodoById(id2) = "+findNodoById(id2));
+                //System.out.println("");
+                //System.out.println("a.getNodi().indexOf(temp) = " + a.getNodi().indexOf(temp));
+                //System.out.println("findNodoById(id2) = "+findNodoById(id2));
                 a.getNodi().set(a.getNodi().indexOf(temp), findNodoById(id2)); //Sostituisco nella prima rotta il nodo 1 col nodo 2 ||||| Da problemi di indici: verificare index e id
                 b.getNodi().set(b.getNodi().indexOf(findNodoById(id2)), temp); //Sostituisco nella seconda rotta il nodo 2 col nodo 1
+                a.aggiornaCosto();
+                b.aggiornaCosto();
             } else {
                 int capacitaInizialeA = a.getCapacitaVeicolo();
                 int capacitaInizialeB = b.getCapacitaVeicolo();
@@ -278,6 +285,8 @@ public class ListaRotte {
                     //Esegui lo scambio
                     a.getNodi().set(a.getNodi().indexOf(temp), findNodoById(id2)); //Sostituisco nella prima rotta il nodo 1 col nodo 2
                     b.getNodi().set(b.getNodi().indexOf(findNodoById(id2)), temp); //Sostituisco nella seconda rotta il nodo 2 col nodo 1
+                    a.aggiornaCosto();
+                    b.aggiornaCosto();
                 } else {
                     return false;
                 }
@@ -287,6 +296,16 @@ public class ListaRotte {
         }
 
         return true;
+    }
+
+    public void stampaMatrice(){
+        System.out.println("\nStampo Matrice Rotte/Nodi");
+        for(Rotta r:this.ottieniRotte()) {
+            System.out.println("R = " + r.getIndiceVeicolo());
+            for(Nodo n:r.getNodi())
+            System.out.print(n.getId() + ", ");
+
+        }
     }
 
 }

@@ -43,6 +43,7 @@ public class Main {
         //prova di stampa dei nodi visitati da ogni rotta
         ArrayList<Rotta> c = lista.ottieniRotte();
         int num=0; //TODO aggiungere visualizzazione del nodo deposito all'inizio e alla fine
+        /*
         for(Rotta a:c){
             System.out.println("");
             System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
@@ -54,6 +55,12 @@ public class Main {
             a.aggiornaCosto();
             System.out.println("Costo dopo = " + a.getCosto());
         }
+        */
+        ArrayList<Double> costi = new ArrayList<Double>();
+        for(Rotta a:c){
+            costi.add(a.getCosto());
+        }
+        double costoTotalePrima = lista.getCostoTotale();
         System.out.println();
         System.out.println("______________________________________________________");
         ArrayList<Rotta> b = lista.ottieniRotteBH();
@@ -68,6 +75,7 @@ public class Main {
         }
         lista.bestExchange();
         num=0; //TODO aggiungere visualizzazione del nodo deposito all'inizio e alla fine
+        int i = 0;
         for(Rotta a:c){
             System.out.println("");
             System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
@@ -75,10 +83,15 @@ public class Main {
             System.out.print(" Capacita = " + a.getCapacitaVeicolo());// lista.getVeicoli().get(a.getIndiceVeicolo()-1).getCapacita());
             num++;
             System.out.println();
-            System.out.println("Costo prima = " + a.getCosto());
+            System.out.println("Costo prima = " + costi.get(i));
+            i++;
             a.aggiornaCosto();
             System.out.println("Costo dopo = " + a.getCosto());
         }
+        System.out.println("________________________________________");
+        System.out.println("Costo Totale Prima= " + costoTotalePrima);
+        System.out.println("Costo Totale Dopo = " + lista.getCostoTotale());
+
 
     }
 }
