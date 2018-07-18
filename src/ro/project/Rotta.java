@@ -32,6 +32,7 @@ public class Rotta {
     }
 
     public Double getCosto() {
+        this.aggiornaCosto();
         return this.costo;
     }
 

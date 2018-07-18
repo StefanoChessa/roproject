@@ -4,6 +4,8 @@ package ro.project;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import sun.security.krb5.internal.crypto.Aes128;
 
+import javax.print.attribute.standard.NumberOfDocuments;
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -129,7 +131,9 @@ public class ListaRotte {
         Rotta rotta2 = r.get(index2);
         //
     }
-
+    private void setListaRotte(ArrayList<Rotta> rotte){
+        this.listaRotteIniziali=rotte;
+    }
 
     public ArrayList<Rotta> ottieniRotte() {
         return this.listaRotteIniziali;
@@ -168,6 +172,38 @@ public class ListaRotte {
         }
     }
 
+    public void bestExchange(){
+        double tempCosto = this.getCostoTotale();
+        int n1 = -1, n2 = -1;
+        try {
+            ListaRotte l2 = new ListaRotte();
+            l2.setListaRotte((ArrayList<Rotta>) this.ottieniRotte().clone());
+
+            for (int i = 0; i < this.ottieniRotte().size(); i++){
+                for (int j = 0; j < this.ottieniRotte().get(i).getNodi().size(); j++){
+                    for(int k = 0; k<this.ottieniRotte().size(); k++){
+                        for(int l = 0; l < this.ottieniRotte().get(k).getNodi().size(); l++){
+                            l2.scambia(this.ottieniRotte().get(i).getNodi().get(j).getId(),this.ottieniRotte().get(k).getNodi().get(l).getId());
+
+                            if (l2.getCostoTotale()<tempCosto){
+                                tempCosto = l2.getCostoTotale();
+                                n1 = this.ottieniRotte().get(i).getNodi().get(j).getId();
+                                n2 = this.ottieniRotte().get(k).getNodi().get(l).getId();
+                            }
+                        }
+                    }
+                    if(n1>=0 && n2 >=0){
+                        this.scambia(n1,n2);
+                        System.out.println("Eseguo lo scambio dei nodi " + n1 + " e " + n2);
+                    }
+                }
+            }
+        } catch (Exception e) {
+        System.out.println("ERRORE nella clonazione dell'oggetto di tipo ListaRotte");
+        e.printStackTrace();
+    }
+    }
+
     public double getCostoTotale(){
         double tot = 0;
         for (Rotta r : this.ottieniRotte())
@@ -203,6 +239,54 @@ public class ListaRotte {
             return false;
         }
 
+    }
+
+    private Nodo findNodoById(int id){
+
+        for(Rotta r : this.ottieniRotte())
+            for(Nodo n : r.getNodi())
+                if(n.getId() == id)
+                    return n;
+        return null;
+    }
+    private int findRottaByNodo(Nodo nodo){
+        for(Rotta r : this.ottieniRotte())
+            for(Nodo n : r.getNodi())
+                if(n.equals(nodo))
+                    return this.ottieniRotte().indexOf(r);
+        return -1;
+    }
+    public boolean scambia(int id1, int id2){
+        Nodo temp = this.findNodoById(id1);
+        Rotta a,b;
+        System.out.println("a = " + id1 + ", b = "+ id2);
+        a = this.ottieniRotte().get(this.findRottaByNodo(findNodoById(id1)));
+        b = this.ottieniRotte().get(this.findRottaByNodo(findNodoById(id2)));
+        if(id1!=id2) {
+            if (a.equals(b)) {
+                //scambia i due nodi senza aggiornare la capacità residua
+                System.out.println("");
+                System.out.println("a.getNodi().indexOf(temp) = " + a.getNodi().indexOf(temp));
+                System.out.println("findNodoById(id2) = "+findNodoById(id2));
+                a.getNodi().set(a.getNodi().indexOf(temp), findNodoById(id2)); //Sostituisco nella prima rotta il nodo 1 col nodo 2 ||||| Da problemi di indici: verificare index e id
+                b.getNodi().set(b.getNodi().indexOf(findNodoById(id2)), temp); //Sostituisco nella seconda rotta il nodo 2 col nodo 1
+            } else {
+                int capacitaInizialeA = a.getCapacitaVeicolo();
+                int capacitaInizialeB = b.getCapacitaVeicolo();
+                if (capacitaInizialeA + ((NodoCliente) findNodoById(id1)).getDelivery() - ((NodoCliente) findNodoById(id2)).getDelivery() >= 0 &&
+                        capacitaInizialeB + ((NodoCliente) findNodoById(id2)).getDelivery() - ((NodoCliente) findNodoById(id1)).getDelivery() >= 0) {
+                    //Esegui lo scambio
+                    a.getNodi().set(a.getNodi().indexOf(temp), findNodoById(id2)); //Sostituisco nella prima rotta il nodo 1 col nodo 2
+                    b.getNodi().set(b.getNodi().indexOf(findNodoById(id2)), temp); //Sostituisco nella seconda rotta il nodo 2 col nodo 1
+                } else {
+                    return false;
+                }
+            }
+        }else{
+            return false;
+        }
+
+        return true;
     }
 
 }
