@@ -160,18 +160,18 @@ public class ListaRotte {
                                 tempCosto = l2.getCostoTotale();
                                 n1 = this.ottieniRotte().get(i).getNodi().get(j).getId();
                                 n2 = this.ottieniRotte().get(k).getNodi().get(l).getId();
-                            } else {
-                                l2.scambia( this.ottieniRotte().get(k).getNodi().get(l).getId(),
-                                            this.ottieniRotte().get(i).getNodi().get(j).getId());
+
                             }
+                            l2.scambia( this.ottieniRotte().get(k).getNodi().get(l).getId(),
+                                    this.ottieniRotte().get(i).getNodi().get(j).getId());
                         }
                     }
-                    if(n1>=0 && n2 >=0){
-                        this.scambia(n1,n2);
-                        //System.out.println("Eseguo lo scambio dei nodi " + n1 + " e " + n2);
-                        n1 = n2 = -1;
-                        this.setListaRotte(l2.ottieniRotte());
-                    }
+
+                }
+                if(n1>=0 && n2 >=0){
+                    this.scambia(n1,n2);
+                    n1 = n2 = -1;
+                    this.setListaRotte(l2.ottieniRotte());
                 }
             }
         } catch (Exception e) {

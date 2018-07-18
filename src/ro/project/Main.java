@@ -94,7 +94,8 @@ public class Main {
             System.out.println("________________________________________");
             System.out.println("Costo Totale Prima= " + costoTotalePrima);
             System.out.println("Costo Totale Dopo = " + lista.getCostoTotale());
-            if(costoTotalePrima<lista.getCostoTotale()) System.out.println("Porca bagassa");
+            if(costoTotalePrima<lista.getCostoTotale())
+                System.out.println("Porca bagassa");
 
         }while(h<100);
 
