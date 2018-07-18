@@ -200,6 +200,7 @@ public class ListaRotte {
                         this.scambia(n1,n2);
                         //System.out.println("Eseguo lo scambio dei nodi " + n1 + " e " + n2);
                         n1 = n2 = -1;
+                        this.setListaRotte(l2.ottieniRotte());
                     }
                 }
             }

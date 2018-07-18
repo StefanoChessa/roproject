@@ -73,25 +73,30 @@ public class Main {
             System.out.print(" Capacita = " + a.getCapacitaVeicolo());
             num++;
         }
-        lista.bestExchange();
-        num=0; //TODO aggiungere visualizzazione del nodo deposito all'inizio e alla fine
-        int i = 0;
-        for(Rotta a:c){
-            System.out.println("");
-            System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
-            a.stampaRotta(a.getNodi());
-            System.out.print(" Capacita = " + a.getCapacitaVeicolo());// lista.getVeicoli().get(a.getIndiceVeicolo()-1).getCapacita());
-            num++;
-            System.out.println();
-            System.out.println("Costo prima = " + costi.get(i));
-            i++;
-            a.aggiornaCosto();
-            System.out.println("Costo dopo = " + a.getCosto());
-        }
-        System.out.println("________________________________________");
-        System.out.println("Costo Totale Prima= " + costoTotalePrima);
-        System.out.println("Costo Totale Dopo = " + lista.getCostoTotale());
+        int h = 0;
+        do {
+            h++;
+            lista.bestExchange();
+            //num = 0; //TODO aggiungere visualizzazione del nodo deposito all'inizio e alla fine
+            //int i = 0;
+            //for (Rotta a : c) {
+                //System.out.println("");
+                //System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
+                //a.stampaRotta(a.getNodi());
+                //System.out.print(" Capacita = " + a.getCapacitaVeicolo());// lista.getVeicoli().get(a.getIndiceVeicolo()-1).getCapacita());
+            //    num++;
+            //    System.out.println();
+            //    System.out.println("Costo prima = " + costi.get(i));
+            //    i++;
+            //    a.aggiornaCosto();
+            //    System.out.println("Costo dopo = " + a.getCosto());
+            //}
+            System.out.println("________________________________________");
+            System.out.println("Costo Totale Prima= " + costoTotalePrima);
+            System.out.println("Costo Totale Dopo = " + lista.getCostoTotale());
+            if(costoTotalePrima<lista.getCostoTotale()) System.out.println("Porca bagassa");
 
+        }while(h<100);
 
     }
 }
