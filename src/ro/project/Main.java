@@ -74,19 +74,49 @@ public class Main {
             num++;
         }
 
-        double costoTotalePrima = lista.getCostoTotale();
-        int h = 0;
+//        double costoTotalePrima = lista.getCostoTotale();
+//        int h = 0;
+//        do {
+//            costoTotalePrima=lista.getCostoTotale();
+//            h++;
+//            lista.bestExchange();
+//            //num = 0; //TODO aggiungere visualizzazione del nodo deposito all'inizio e alla fine
+//            //int i = 0;
+//            //for (Rotta a : c) {
+//                //System.out.println("");
+//                //System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
+//                //a.stampaRotta(a.getNodi());
+//                //System.out.print(" Capacita = " + a.getCapacitaVeicolo());// lista.getVeicoli().get(a.getIndiceVeicolo()-1).getCapacita());
+//            //    num++;
+//            //    System.out.println();
+//            //    System.out.println("Costo prima = " + costi.get(i));
+//            //    i++;
+//            //    a.aggiornaCosto();
+//            //    System.out.println("Costo dopo = " + a.getCosto());
+//            //}
+//            System.out.println("________________________________________");
+//            System.out.println("Costo Totale Prima= " + costoTotalePrima);
+//            System.out.println("Costo Totale Dopo = " + lista.getCostoTotale());
+//            if(costoTotalePrima<lista.getCostoTotale())
+//                System.out.println("Porca bagassa***********************************");
+//
+//        }while(h<2);
+
+        //////////////////////////////////////***************
+        System.out.println("ORA IL RELOCATE DEL CAZZOOOOOOOOOOO");
+        double costopri = lista.getCostoTotale();
+        int g = 0;
         do {
-            costoTotalePrima=lista.getCostoTotale();
-            h++;
-            lista.bestExchange();
+            costopri=lista.getCostoTotale();
+            g++;
+            lista.bestRelocate();
             //num = 0; //TODO aggiungere visualizzazione del nodo deposito all'inizio e alla fine
             //int i = 0;
             //for (Rotta a : c) {
-                //System.out.println("");
-                //System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
-                //a.stampaRotta(a.getNodi());
-                //System.out.print(" Capacita = " + a.getCapacitaVeicolo());// lista.getVeicoli().get(a.getIndiceVeicolo()-1).getCapacita());
+            //System.out.println("");
+            //System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
+            //a.stampaRotta(a.getNodi());
+            //System.out.print(" Capacita = " + a.getCapacitaVeicolo());// lista.getVeicoli().get(a.getIndiceVeicolo()-1).getCapacita());
             //    num++;
             //    System.out.println();
             //    System.out.println("Costo prima = " + costi.get(i));
@@ -95,12 +125,16 @@ public class Main {
             //    System.out.println("Costo dopo = " + a.getCosto());
             //}
             System.out.println("________________________________________");
-            System.out.println("Costo Totale Prima= " + costoTotalePrima);
+            System.out.println("Costo Totale Prima= " + costopri);
             System.out.println("Costo Totale Dopo = " + lista.getCostoTotale());
-            if(costoTotalePrima<lista.getCostoTotale())
-                System.out.println("Porca bagassa***********************************");
+            if(costopri<lista.getCostoTotale())
+                System.out.println("Porca bagassa relocate");
 
-        }while(h<10);
+        }while(g<20);
+
+
+
+
 
     }
 }

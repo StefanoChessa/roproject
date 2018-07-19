@@ -149,9 +149,8 @@ public class ListaRotte implements Cloneable {
         int n1 = -1, n2 = -1;
         boolean flag = false;
         try {
-            //do {
+            do {
                 ListaRotte l2 = (ListaRotte) this.clone();
-                //l2.setListaRotte((ArrayList<Rotta>) this.ottieniRotte().clone());
 
                 flag = false;
                 for (int i = 0; i < this.ottieniRotte().size(); i++) {
@@ -159,66 +158,88 @@ public class ListaRotte implements Cloneable {
                         for (int k = 0; k < this.ottieniRotte().size(); k++) {
                             for (int l = 0; l < this.ottieniRotte().get(k).getNodi().size(); l++) {
 
-                                int uno, due, tre, quattro;
+                                int uno, due;
                                 uno = this.ottieniRotte().get(i).getNodi().get(j).getId();
                                 due = this.ottieniRotte().get(k).getNodi().get(l).getId();
 
-                                l2.scambia(uno,due);
-
-//                                tre = this.ottieniRotte().get(i).getNodi().get(j).getId();
-//                                quattro = this.ottieniRotte().get(k).getNodi().get(l).getId();
+                                l2.scambia(uno, due);
 
                                 if (l2.getCostoTotale() < tempCosto) {
                                     tempCosto = l2.getCostoTotale();
                                     n1 = this.ottieniRotte().get(i).getNodi().get(j).getId();
                                     n2 = this.ottieniRotte().get(k).getNodi().get(l).getId();
                                     flag = true;
-//                                    if (l2.getCostoTotale() != this.getCostoTotale()){
-//                                        System.out.println("nell'IF è diverso");
-//                                    }
-//                                    else
-//                                        System.out.println("nell'IF è uguale");
+
                                 }
 
-                                l2 = (ListaRotte) this.clone();
-
-                                //l2.scambia(uno,due);
-
-//                                if (l2.getCostoTotale() == this.getCostoTotale()) {//todo da rimuovere la if è solo un controllo
-//                                    System.out.println("giusto");
-//                                } else {
-//                                    System.out.println("sbagliato");
-//                                }
+                                l2 = (ListaRotte) this.clone();  //rimetto tutto apposto
                             }
                         }
 
                     }
                     if (n1 >= 0 && n2 >= 0) {
 
-                       // double a, b, c, d, e = 0.0;
-                       // c = l2.getCostoTotale();
                         this.scambia(n1, n2);
-                      //  d = l2.getCostoTotale();
-
                         n1 = n2 = -1;
-
                         l2 = (ListaRotte) this.clone();
-                       // a = this.getCostoTotale();
-                       // b = l2.getCostoTotale();
-
-
-//                        if (tempCosto == a) {//todo da rimuovere la if è solo un controllo
-//                            System.out.println("giustoN2");
-//                        }
-//
-//                        if (b == tempCosto) {//todo da rimuovere la if è solo un controllo
-//                             System.out.println("giustoN3");
-//                        }
-
 
                     }
                 }
-           // } while (flag);
+            } while (flag);
+        } catch (Exception e) {
+            System.out.println("ERRORE nella clonazione dell'oggetto di tipo ListaRotte");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     *
+     */
+    public void bestRelocate() {
+        double tempCosto = this.getCostoTotale();
+        int idNodo=-1;
+        int indice =-1;//la POSIZIONE nella quale si vuole aggiungere il nodo nella seconda rotta
+        int indice_rotta = -1;
+
+        boolean flag = false;
+        try {
+            do {
+                ListaRotte l2 = (ListaRotte) this.clone();
+
+                flag = false;
+                for (int ri = 0; ri < this.ottieniRotte().size(); ri++) {
+                    for (int ni = 0; ni < this.ottieniRotte().get(ri).getNodi().size(); ni++) {
+                        for (int rj = 0; rj < this.ottieniRotte().size(); rj++) {
+                            for (int nj = 0; nj < this.ottieniRotte().get(rj).getNodi().size(); nj++) {
+                                indice = nj;
+
+                                if (l2.ottieniRotte().get(rj).aggiungiNodo(this.ottieniRotte().get(rj).getNodi().get(nj), indice)) {
+
+                                    l2.ottieniRotte().get(ri).getNodi().remove(ni);
+
+                                    if (l2.getCostoTotale() < tempCosto) {
+                                        tempCosto = l2.getCostoTotale();
+                                        idNodo = this.ottieniRotte().get(ri).getNodi().get(nj).getId();//indice del nodo da spostare
+                                        indice_rotta = rj;
+                                        flag = true;
+                                    }
+
+                                }
+                                l2=(ListaRotte) this.clone();
+                            }
+                        }
+
+                    }
+                    if (idNodo >= 0 && indice_rotta >= 0) {
+
+                        Nodo n=this.findNodoById(idNodo);
+                        this.ottieniRotte().get(ri).getNodi().remove(n);
+                        this.ottieniRotte().get(indice_rotta).aggiungiNodo(n,indice);
+                        idNodo = indice_rotta = -1;
+                        l2 = (ListaRotte) this.clone();
+                    }
+                }
+            } while (flag);
         } catch (Exception e) {
             System.out.println("ERRORE nella clonazione dell'oggetto di tipo ListaRotte");
             e.printStackTrace();

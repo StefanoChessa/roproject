@@ -51,14 +51,21 @@ public class Rotta implements  Cloneable {
         this.aggiornaCosto();
     }
 
-    public void aggiungiNodo(Nodo nodo, int i){
-        this.nodi.add(i,nodo);
-        this.aggiornaCosto();
+//    public void aggiungiNodo(Nodo nodo, int i){
+//        this.nodi.add(i,nodo);
+//        this.aggiornaCosto();
+//    }
+
+    public boolean aggiungiNodo(Nodo nodo, int i){
+        if(this.capacitaVeicolo-((NodoCliente)nodo).getDelivery()>=0) {
+            this.nodi.add(i, nodo);
+            this.aggiornaCosto();
+            this.setCapacitaVeicolo(this.getCapacitaVeicolo()-((NodoCliente)nodo).getDelivery());
+            return true;
+        }
+        return false;
     }
 
-    public void replace(Rotta r2, int i1, int i2){
-
-    }
 
 
     public int getIndiceVeicolo() {
@@ -91,6 +98,8 @@ public class Rotta implements  Cloneable {
     public int getCapacitaVeicolo() {
         return this.capacitaVeicolo;
     }
+
+
 
     public Object clone() {
         try {
