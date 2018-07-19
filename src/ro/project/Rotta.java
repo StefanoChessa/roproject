@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by marco on 10/07/2018.
  */
-public class Rotta {
+public class Rotta implements  Cloneable {
 
     private int indiceVeicolo;
     private ArrayList<Nodo> nodi;
@@ -90,5 +90,19 @@ public class Rotta {
 
     public int getCapacitaVeicolo() {
         return this.capacitaVeicolo;
+    }
+
+    public Object clone() {
+        try {
+            Rotta r;
+            r = (Rotta) super.clone();
+            r.nodi = (ArrayList<Nodo>) this.nodi.clone();
+            for(int i=0;i<r.nodi.size();i++) {
+                r.nodi.set(i,((Nodo) this.nodi.get(i).clone()));
+            }
+            return r;
+        }catch (CloneNotSupportedException e) {
+            return null;
+        }
     }
 }

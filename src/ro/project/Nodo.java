@@ -1,6 +1,8 @@
 package ro.project;
 
-public class Nodo {
+import java.util.ArrayList;
+
+public class Nodo implements  Cloneable{
 
     private int x = 0;
     private int y = 0;
@@ -34,5 +36,14 @@ public class Nodo {
     private void setY(int y) {
         this.y = y;
     }
-
+    public Object clone() {
+        try {
+            Nodo n;
+            n = (Nodo) super.clone();
+            return n;
+        }catch (CloneNotSupportedException e) {
+            return null;
+        }
+    }
 }
+

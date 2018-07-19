@@ -60,7 +60,7 @@ public class Main {
         for(Rotta a:c){
             costi.add(a.getCosto());
         }
-        double costoTotalePrima = lista.getCostoTotale();
+
         System.out.println();
         System.out.println("______________________________________________________");
         ArrayList<Rotta> b = lista.ottieniRotteBH();
@@ -73,8 +73,11 @@ public class Main {
             System.out.print(" Capacita = " + a.getCapacitaVeicolo());
             num++;
         }
+
+        double costoTotalePrima = lista.getCostoTotale();
         int h = 0;
         do {
+            costoTotalePrima=lista.getCostoTotale();
             h++;
             lista.bestExchange();
             //num = 0; //TODO aggiungere visualizzazione del nodo deposito all'inizio e alla fine
@@ -95,9 +98,9 @@ public class Main {
             System.out.println("Costo Totale Prima= " + costoTotalePrima);
             System.out.println("Costo Totale Dopo = " + lista.getCostoTotale());
             if(costoTotalePrima<lista.getCostoTotale())
-                System.out.println("Porca bagassa");
+                System.out.println("Porca bagassa***********************************");
 
-        }while(h<100);
+        }while(h<10);
 
     }
 }
