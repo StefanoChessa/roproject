@@ -21,21 +21,6 @@ public class Main {
         MatriceDistanze matr = new MatriceDistanze(file.getTuttiNodi());
         matr.creaMatrice();
 
-        MatriceSavings matriceSavings = new MatriceSavings(file.getClienti(),file.getNodoDeposito());
-        matriceSavings.calcolaMatriceSaving();
-
-
-        ArrayList<SavingNodi> nodiSaving = matriceSavings.ordinaSaving();
-
-        Double valore = matriceSavings.getSavingAt(1,5);
-
-        for(int i=0; i < nodiSaving.size(); i++){
-            if (nodiSaving.get(i).getSaving() == valore){
-                System.out.println(nodiSaving.get(i).getNodoA().getId() + " " +
-                        nodiSaving.get(i).getNodoB().getId());
-            }
-        }
-
         ListaRotte lista = new ListaRotte();
         lista.inizializzaLineHaul(file);
         lista.inizializzaBackHaul(file);
@@ -43,7 +28,7 @@ public class Main {
         //prova di stampa dei nodi visitati da ogni rotta
         ArrayList<Rotta> c = lista.ottieniRotte();
         int num=0; //TODO aggiungere visualizzazione del nodo deposito all'inizio e alla fine
-        /*
+        /**Prova stampa linehaul**/
         for(Rotta a:c){
             System.out.println("");
             System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
@@ -55,12 +40,10 @@ public class Main {
             a.aggiornaCosto();
             System.out.println("Costo dopo = " + a.getCosto());
         }
-        */
-        ArrayList<Double> costi = new ArrayList<Double>();
-        for(Rotta a:c){
-            costi.add(a.getCosto());
-        }
 
+
+
+        /**Prova stampa backhaul**/
         System.out.println();
         System.out.println("______________________________________________________");
         ArrayList<Rotta> b = lista.ottieniRotteBH();
@@ -74,12 +57,14 @@ public class Main {
             num++;
         }
 
+        /**faccio il bestExchnge**/
 //        double costoTotalePrima = lista.getCostoTotale();
 //        int h = 0;
 //        do {
 //            costoTotalePrima=lista.getCostoTotale();
 //            h++;
-//            lista.bestExchange();
+        System.out.println("ORA EXCHANGE");
+           // lista.bestExchange();
 //            //num = 0; //TODO aggiungere visualizzazione del nodo deposito all'inizio e alla fine
 //            //int i = 0;
 //            //for (Rotta a : c) {
@@ -103,12 +88,11 @@ public class Main {
 //        }while(h<2);
 
         //////////////////////////////////////***************
-        System.out.println("ORA IL RELOCATE DEL CAZZOOOOOOOOOOO");
+        System.out.println("ORA IL RELOCATE");
         double costopri = lista.getCostoTotale();
         int g = 0;
-        do {
+
             costopri=lista.getCostoTotale();
-            g++;
             lista.bestRelocate();
             //num = 0; //TODO aggiungere visualizzazione del nodo deposito all'inizio e alla fine
             //int i = 0;
@@ -130,7 +114,7 @@ public class Main {
             if(costopri<lista.getCostoTotale())
                 System.out.println("Porca bagassa relocate");
 
-        }while(g<20);
+
 
 
 
