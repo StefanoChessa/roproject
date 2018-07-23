@@ -26,7 +26,8 @@ public class Main {
         lista.inizializzaBackHaul(file);
 
         //prova di stampa dei nodi visitati da ogni rotta
-        ArrayList<Rotta> c = lista.ottieniRotte();
+        ArrayList<Rotta> c = lista.ottieniRotteLH();
+
         int num=0; //TODO aggiungere visualizzazione del nodo deposito all'inizio e alla fine
         /**Prova stampa linehaul**/
         for(Rotta a:c){
@@ -58,13 +59,19 @@ public class Main {
         }
 
         /**faccio il bestExchnge**/
-//        double costoTotalePrima = lista.getCostoTotale();
-//        int h = 0;
-//        do {
-//            costoTotalePrima=lista.getCostoTotale();
-//            h++;
-        System.out.println("ORA EXCHANGE");
-           // lista.bestExchange();
+        double costoTotalePrima = lista.getCostoTotale();
+        int h = 0;
+        do {
+//            c
+             h++;
+             System.out.println("");
+            costoTotalePrima=lista.getCostoTotale();
+        System.out.println("Effettuo alcune mosse exchange e relocate ");
+
+             lista.bestExchangeBackhaul();
+            //lista.bestRelocateBackhaul();
+
+
 //            //num = 0; //TODO aggiungere visualizzazione del nodo deposito all'inizio e alla fine
 //            //int i = 0;
 //            //for (Rotta a : c) {
@@ -79,21 +86,21 @@ public class Main {
 //            //    a.aggiornaCosto();
 //            //    System.out.println("Costo dopo = " + a.getCosto());
 //            //}
-//            System.out.println("________________________________________");
-//            System.out.println("Costo Totale Prima= " + costoTotalePrima);
-//            System.out.println("Costo Totale Dopo = " + lista.getCostoTotale());
-//            if(costoTotalePrima<lista.getCostoTotale())
-//                System.out.println("Porca bagassa***********************************");
+            System.out.println("________________________________________");
+             System.out.println("Costo Totale Prima= " + costoTotalePrima);
+            System.out.println("Costo Totale Dopo = " + lista.getCostoTotale());
+            if(costoTotalePrima<lista.getCostoTotale())
+                System.out.println("Porca bagassa***********************************");
 //
-//        }while(h<2);
+         }while(h<5);
 
         //////////////////////////////////////***************
-        System.out.println("ORA IL RELOCATE");
+        //System.out.println("ORA IL RELOCATE");
         double costopri = lista.getCostoTotale();
         int g = 0;
 
             costopri=lista.getCostoTotale();
-            lista.bestRelocate();
+            //lista.bestRelocate();
             //num = 0; //TODO aggiungere visualizzazione del nodo deposito all'inizio e alla fine
             //int i = 0;
             //for (Rotta a : c) {
@@ -108,11 +115,11 @@ public class Main {
             //    a.aggiornaCosto();
             //    System.out.println("Costo dopo = " + a.getCosto());
             //}
-            System.out.println("________________________________________");
-            System.out.println("Costo Totale Prima= " + costopri);
-            System.out.println("Costo Totale Dopo = " + lista.getCostoTotale());
-            if(costopri<lista.getCostoTotale())
-                System.out.println("Porca bagassa relocate");
+//            System.out.println("________________________________________");
+//            System.out.println("Costo Totale Prima= " + costopri);
+//            System.out.println("Costo Totale Dopo = " + lista.getCostoTotale());
+//            if(costopri<lista.getCostoTotale())
+//                System.out.println("Porca bagassa relocate");
 
 
 

@@ -1,11 +1,6 @@
 //linehaul=delivery
 package ro.project;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import sun.security.krb5.internal.crypto.Aes128;
-
-import javax.print.attribute.standard.NumberOfDocuments;
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -129,10 +124,11 @@ public class ListaRotte implements Cloneable {
      */
 
     private void setListaRotte(ArrayList<Rotta> rotte) {
+
         this.listaRotteIniziali = rotte;
     }
 
-    public ArrayList<Rotta> ottieniRotte() {
+    public ArrayList<Rotta> ottieniRotteLH() {
         return this.listaRotteIniziali;
     }
 
@@ -143,7 +139,7 @@ public class ListaRotte implements Cloneable {
     /**
      * Effettua lo scambio di due nodi con costo minimo
      */
-    public void bestExchange() {
+    public void bestExchangeLinehaul() {
         double tempCosto = this.getCostoTotale();
         int n1 = -1, n2 = -1;
         boolean flag = false;
@@ -152,21 +148,21 @@ public class ListaRotte implements Cloneable {
                 ListaRotte l2 = (ListaRotte) this.clone();
 
                 flag = false;
-                for (int i = 0; i < this.ottieniRotte().size(); i++) {
-                    for (int j = 0; j < this.ottieniRotte().get(i).getNodi().size(); j++) {
-                        for (int k = 0; k < this.ottieniRotte().size(); k++) {
-                            for (int l = 0; l < this.ottieniRotte().get(k).getNodi().size(); l++) {
+                for (int i = 0; i < this.ottieniRotteLH().size(); i++) {
+                    for (int j = 0; j < this.ottieniRotteLH().get(i).getNodi().size(); j++) {
+                        for (int k = 0; k < this.ottieniRotteLH().size(); k++) {
+                            for (int l = 0; l < this.ottieniRotteLH().get(k).getNodi().size(); l++) {
 
                                 int uno, due;
-                                uno = this.ottieniRotte().get(i).getNodi().get(j).getId();//identificativo nodo da spostare
-                                due = this.ottieniRotte().get(k).getNodi().get(l).getId();
+                                uno = this.ottieniRotteLH().get(i).getNodi().get(j).getId();//identificativo nodo da spostare
+                                due = this.ottieniRotteLH().get(k).getNodi().get(l).getId();
 
-                                l2.scambia(uno, due);
+                                l2.scambiaLinehaul(uno, due);
 
                                 if (l2.getCostoTotale() < tempCosto) {
                                     tempCosto = l2.getCostoTotale();
-                                    n1 = this.ottieniRotte().get(i).getNodi().get(j).getId();
-                                    n2 = this.ottieniRotte().get(k).getNodi().get(l).getId();
+                                    n1 = this.ottieniRotteLH().get(i).getNodi().get(j).getId();
+                                    n2 = this.ottieniRotteLH().get(k).getNodi().get(l).getId();
                                     flag = true;
 
                                 }
@@ -178,7 +174,7 @@ public class ListaRotte implements Cloneable {
                     }
                     if (n1 >= 0 && n2 >= 0) {
 
-                        this.scambia(n1, n2);
+                        this.scambiaLinehaul(n1, n2);
                         n1 = n2 = -1;
                         l2 = (ListaRotte) this.clone();
 
@@ -194,7 +190,7 @@ public class ListaRotte implements Cloneable {
     /**
      *
      */
-    public void bestRelocate() {
+    public void bestRelocateLinehaul() {
         double tempCosto = this.getCostoTotale();
         int idNodo=-1;
         int indice =-1;//la POSIZIONE nella quale si vuole aggiungere il nodo nella seconda rotta
@@ -206,16 +202,16 @@ public class ListaRotte implements Cloneable {
                 ListaRotte l2 = (ListaRotte) this.clone();
 
                 flag = false;
-                for (int i = 0; i < this.ottieniRotte().size(); i++) {
-                    for (int j = 0; j < this.ottieniRotte().get(i).getNodi().size(); j++) {
-                        for (int k = 0; k < this.ottieniRotte().size(); k++) {
-                            for (int l = 0; l < this.ottieniRotte().get(k).getNodi().size(); l++) {
+                for (int i = 0; i < this.ottieniRotteLH().size(); i++) {
+                    for (int j = 0; j < this.ottieniRotteLH().get(i).getNodi().size(); j++) {
+                        for (int k = 0; k < this.ottieniRotteLH().size(); k++) {
+                            for (int l = 0; l < this.ottieniRotteLH().get(k).getNodi().size(); l++) {
 
                                 int uno;
-                                uno = this.ottieniRotte().get(i).getNodi().get(j).getId();//identificativo nodo da spostare
+                                uno = this.ottieniRotteLH().get(i).getNodi().get(j).getId();//identificativo nodo da spostare
 
 
-                                boolean flag2=l2.sposta(uno,k,l);
+                                boolean flag2=l2.spostaLinehaul(uno,k,l);
 
                                 if (flag2) {//if flag2
 
@@ -234,7 +230,7 @@ public class ListaRotte implements Cloneable {
 
                     }
                     if (idNodo >= 0 && indice_rotta >= 0 && indice>=0) {
-                        this.sposta(idNodo,indice_rotta,indice);
+                        this.spostaLinehaul(idNodo,indice_rotta,indice);
                         idNodo = indice_rotta =indice= -1;
                         l2 = (ListaRotte) this.clone();
                     }
@@ -242,6 +238,7 @@ public class ListaRotte implements Cloneable {
             } while (flag);
         } catch (Exception e) {
             System.out.println("ERRORE nella clonazione dell'oggetto di tipo ListaRotte");
+           System.exit(1);
             e.printStackTrace();
         }
     }
@@ -250,14 +247,15 @@ public class ListaRotte implements Cloneable {
      *
      * @param idNodo
      * @param idRotta
+     * @param posizione
      * @return
      */
-    public boolean sposta(int idNodo, int idRotta,int posizione) {
-        Nodo nodoTemp = this.findNodoById(idNodo);
+    public boolean spostaLinehaul(int idNodo, int idRotta, int posizione) {
+        Nodo nodoTemp = this.findNodoById(idNodo,ottieniRotteLH());
         Rotta a, b;
 
-        a = this.ottieniRotte().get(this.findRottaByNodo(findNodoById(idNodo)));//la rotta dove devo rimuovere il nodo
-        b = this.ottieniRotte().get(idRotta);//la rotta dove devo aggiungere il nodo
+        a = this.ottieniRotteLH().get(this.findRottaByNodo(findNodoById(idNodo,this.ottieniRotteLH()),this.ottieniRotteLH()));//la rotta dove devo rimuovere il nodo
+        b = this.ottieniRotteLH().get(idRotta);//la rotta dove devo aggiungere il nodo
 
             if (a.equals(b)) {
                 //System.out.println("Non posso fare il relocate tra rotte uguali");
@@ -266,11 +264,11 @@ public class ListaRotte implements Cloneable {
                 int capacitaInizialeA = a.getCapacitaVeicolo();//quando RIMUOVO il nodo devo aggiornare la capacità
                 int capacitaInizialeB = b.getCapacitaVeicolo();//quando AGGIUNGO il nodo devo aggiornare la capacità
 
-                   if (capacitaInizialeB  - ((NodoCliente)nodoTemp).getDelivery() >= 0) {
+                   if (capacitaInizialeB  - ((NodoCliente)nodoTemp).getDelivery() >= 0 && a.getNodi().size()>1) {
                     //Esegui il relocate
                     //elimino il nodo dalla rotta a e aggiorno la capacita e costo della rotta
                     a.rimuoviNodo(nodoTemp);
-                    a.setCapacitaVeicolo(a.getCapacitaVeicolo()+((NodoCliente) nodoTemp).getDelivery());
+                    a.setCapacitaVeicolo(capacitaInizialeA +((NodoCliente) nodoTemp).getDelivery());
                     a.aggiornaCosto();
                     //ora lo aggiungo alla rotta b e aggiorno le capacità e i costi
                     b.getNodi().set(posizione,nodoTemp);
@@ -283,54 +281,38 @@ public class ListaRotte implements Cloneable {
             }
     }
 
-    public double getCostoTotale() {
-        double tot = 0;
-        for (Rotta r : this.ottieniRotte())
-            tot += r.getCosto();
-        return tot;
-    }
-
-    private Nodo findNodoById(int id) {
-
-        for (Rotta r : this.ottieniRotte())
-            for (Nodo n : r.getNodi())
-                if (n.getId() == id)
-                    return n;
-        return null;
-    }
-
-    private int findRottaByNodo(Nodo nodo) {
-        for (Rotta r : this.ottieniRotte())
-            for (Nodo n : r.getNodi())
-                if (n.equals(nodo))
-                    return this.ottieniRotte().indexOf(r);
-        return -1;
-    }
-
-    public boolean scambia(int id1, int id2) {
-        Nodo temp = this.findNodoById(id1);
+    /**
+     *
+     * @param id1
+     * @param id2
+     * @return
+     */
+    public boolean scambiaLinehaul(int id1, int id2) {
+        Nodo temp = this.findNodoById(id1,this.ottieniRotteLH());
         Rotta a, b;
         //System.out.println("a = " + id1 + ", b = "+ id2);
-        a = this.ottieniRotte().get(this.findRottaByNodo(findNodoById(id1)));
-        b = this.ottieniRotte().get(this.findRottaByNodo(findNodoById(id2)));
+        a = this.ottieniRotteLH().get(this.findRottaByNodo(findNodoById(id1,this.ottieniRotteLH()),this.ottieniRotteLH()));
+        b = this.ottieniRotteLH().get(this.findRottaByNodo(findNodoById(id2, this.ottieniRotteLH()),this.ottieniRotteLH()));
         if (id1 != id2) {
             if (a.equals(b)) {
-                //scambia i due nodi senza aggiornare la capacità residua
+                //scambiaLinehaul i due nodi senza aggiornare la capacità residua
                 //System.out.println("");
                 //System.out.println("a.getNodi().indexOf(temp) = " + a.getNodi().indexOf(temp));
                 //System.out.println("findNodoById(id2) = "+findNodoById(id2));
-                a.getNodi().set(a.getNodi().indexOf(temp), findNodoById(id2)); //Sostituisco nella prima rotta il nodo 1 col nodo 2 ||||| Da problemi di indici: verificare index e id
-                b.getNodi().set(b.getNodi().indexOf(findNodoById(id2)), temp); //Sostituisco nella seconda rotta il nodo 2 col nodo 1
+                a.getNodi().set(a.getNodi().indexOf(temp), findNodoById(id2,this.ottieniRotteLH())); //Sostituisco nella prima rotta il nodo 1 col nodo 2 ||||| Da problemi di indici: verificare index e id
+                b.getNodi().set(b.getNodi().indexOf(findNodoById(id2,this.ottieniRotteLH())), temp); //Sostituisco nella seconda rotta il nodo 2 col nodo 1
                 a.aggiornaCosto();
                 b.aggiornaCosto();
             } else {
                 int capacitaInizialeA = a.getCapacitaVeicolo();
                 int capacitaInizialeB = b.getCapacitaVeicolo();
-                if (capacitaInizialeA + ((NodoCliente) findNodoById(id1)).getDelivery() - ((NodoCliente) findNodoById(id2)).getDelivery() >= 0 &&
-                        capacitaInizialeB + ((NodoCliente) findNodoById(id2)).getDelivery() - ((NodoCliente) findNodoById(id1)).getDelivery() >= 0) {
+                if (capacitaInizialeA + ((NodoCliente) findNodoById(id1,this.ottieniRotteLH())).getDelivery() - ((NodoCliente) findNodoById(id2,this.ottieniRotteLH())).getDelivery() >= 0 &&
+                        capacitaInizialeB + ((NodoCliente) findNodoById(id2,this.ottieniRotteLH())).getDelivery() - ((NodoCliente) findNodoById(id1,this.ottieniRotteLH())).getDelivery() >= 0) {
                     //Esegui lo scambio
-                    a.getNodi().set(a.getNodi().indexOf(temp), findNodoById(id2)); //Sostituisco nella prima rotta il nodo 1 col nodo 2
-                    b.getNodi().set(b.getNodi().indexOf(findNodoById(id2)), temp); //Sostituisco nella seconda rotta il nodo 2 col nodo 1
+                    a.getNodi().set(a.getNodi().indexOf(temp), findNodoById(id2,this.ottieniRotteLH())); //Sostituisco nella prima rotta il nodo 1 col nodo 2
+                    b.getNodi().set(b.getNodi().indexOf(findNodoById(id2,this.ottieniRotteLH())), temp); //Sostituisco nella seconda rotta il nodo 2 col nodo 1
+                    a.setCapacitaVeicolo(capacitaInizialeA + ((NodoCliente) findNodoById(id1,this.ottieniRotteLH())).getDelivery() - ((NodoCliente) findNodoById(id2,this.ottieniRotteLH())).getDelivery());
+                    b.setCapacitaVeicolo(capacitaInizialeB + ((NodoCliente) findNodoById(id2,this.ottieniRotteLH())).getDelivery() - ((NodoCliente) findNodoById(id1,this.ottieniRotteLH())).getDelivery());
                     a.aggiornaCosto();
                     b.aggiornaCosto();
                 } else {
@@ -344,9 +326,224 @@ public class ListaRotte implements Cloneable {
         return true;
     }
 
+    public double getCostoTotale() {
+        double tot = 0;
+        for (Rotta r : this.ottieniRotteBH())//TODO costo totale dev essere di tutto non dei soli linehaul o dei soli backhaul
+            tot += r.getCosto();
+        return tot;
+    }
+
+    private Nodo findNodoById(int id, ArrayList<Rotta> rotte) {
+
+        for (Rotta r : rotte)
+            for (Nodo n : r.getNodi())
+                if (n.getId() == id)
+                    return n;
+        return null;
+    }
+
+    private int findRottaByNodo(Nodo nodo,ArrayList<Rotta> rotte) {
+        for (Rotta r : rotte)
+            for (Nodo n : r.getNodi())
+                if (n.equals(nodo))
+                    return rotte.indexOf(r);
+        return -1;
+    }
+
+
+    /**
+     * bestExchange sui backhaul
+     */
+
+    public void bestExchangeBackhaul() {
+        double tempCosto = this.getCostoTotale();
+        int n1 = -1, n2 = -1;
+        boolean flag = false;
+        try {
+            do {
+                ListaRotte l2 = (ListaRotte) this.clone();
+
+                flag = false;
+                for (int i = 0; i < this.ottieniRotteBH().size(); i++) {
+                    for (int j = 0; j < this.ottieniRotteBH().get(i).getNodi().size(); j++) {
+                        for (int k = 0; k < this.ottieniRotteBH().size(); k++) {
+                            for (int l = 0; l < this.ottieniRotteBH().get(k).getNodi().size(); l++) {
+
+                                int uno, due;
+                                uno = this.ottieniRotteBH().get(i).getNodi().get(j).getId();//identificativo nodo da spostare
+                                due = this.ottieniRotteBH().get(k).getNodi().get(l).getId();
+
+                                l2.scambiaBackhaul(uno, due);
+
+                                if (l2.getCostoTotale() < tempCosto) {
+                                    tempCosto = l2.getCostoTotale();
+                                    n1 = this.ottieniRotteBH().get(i).getNodi().get(j).getId();
+                                    n2 = this.ottieniRotteBH().get(k).getNodi().get(l).getId();
+                                    flag = true;
+
+                                }
+
+                                l2 = (ListaRotte) this.clone();  //rimetto tutto apposto
+                            }
+                        }
+
+                    }
+                    if (n1 >= 0 && n2 >= 0) {
+
+                        this.scambiaBackhaul(n1, n2);
+                        n1 = n2 = -1;
+                        l2 = (ListaRotte) this.clone();
+
+                    }
+                }
+            } while (flag);
+        } catch (Exception e) {
+            System.out.println("ERRORE nella clonazione dell'oggetto di tipo ListaRotte");
+            e.printStackTrace();
+        }
+    }
+    /**
+     * BestRelocate sulle rotte dei Backhaul
+     */
+
+    public void bestRelocateBackhaul() {
+        double tempCosto = this.getCostoTotale();
+        int idNodo=-1;
+        int indice =-1;//la POSIZIONE nella quale si vuole aggiungere il nodo nella seconda rotta
+        int indice_rotta = -1;
+
+        boolean flag = false;
+        try {
+            do {
+                ListaRotte l2 = (ListaRotte) this.clone();
+
+                flag = false;
+                for (int i = 0; i < this.ottieniRotteBH().size(); i++) {
+                    for (int j = 0; j < this.ottieniRotteBH().get(i).getNodi().size(); j++) {
+                        for (int k = 0; k < this.ottieniRotteBH().size(); k++) {
+                            for (int l = 0; l < this.ottieniRotteBH().get(k).getNodi().size(); l++) {
+
+                                int uno;
+                                uno = this.ottieniRotteBH().get(i).getNodi().get(j).getId();//identificativo nodo da spostare
+
+
+                                boolean flag2=l2.spostaBackhaul(uno,k,l);
+
+                                if (flag2) {//if flag2
+
+                                    if (l2.getCostoTotale() < tempCosto) {
+                                        tempCosto = l2.getCostoTotale();
+                                        idNodo = uno;
+                                        indice = l; //la posizione nella lista di nodi dove provo ad effettuare il relocate
+                                        indice_rotta=indice;
+                                        flag = true;
+                                    }
+
+                                }//if flag2
+                                l2=(ListaRotte) this.clone();
+                            }
+                        }
+
+                    }
+                    if (idNodo >= 0 && indice_rotta >= 0 && indice>=0) {
+                        this.spostaBackhaul(idNodo,indice_rotta,indice);
+                        idNodo = indice_rotta =indice= -1;
+                        l2 = (ListaRotte) this.clone();
+                    }
+                }
+            } while (flag);
+        } catch (Exception e) {
+            System.out.println("ERRORE nella clonazione dell'oggetto di tipo ListaRotte");
+            System.exit(1);
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     *
+     * @param id1
+     * @param id2
+     * @return
+     */
+    public boolean scambiaBackhaul(int id1, int id2) {
+        Nodo temp = this.findNodoById(id1,this.ottieniRotteBH());
+        Rotta a, b;
+        //System.out.println("a = " + id1 + ", b = "+ id2);
+        a = this.ottieniRotteBH().get(this.findRottaByNodo(findNodoById(id1,this.ottieniRotteBH()),this.ottieniRotteBH()));
+        b = this.ottieniRotteBH().get(this.findRottaByNodo(findNodoById(id2,this.ottieniRotteBH()),this.ottieniRotteBH()));
+        if (id1 != id2) {
+            if (a.equals(b)) {
+                a.getNodi().set(a.getNodi().indexOf(temp), findNodoById(id2,this.ottieniRotteBH())); //Sostituisco nella prima rotta il nodo 1 col nodo 2 ||||| Da problemi di indici: verificare index e id
+                b.getNodi().set(b.getNodi().indexOf(findNodoById(id2,this.ottieniRotteBH())), temp); //Sostituisco nella seconda rotta il nodo 2 col nodo 1
+                a.aggiornaCosto();
+                b.aggiornaCosto();
+            } else {
+                int capacitaInizialeA = a.getCapacitaVeicolo();
+                int capacitaInizialeB = b.getCapacitaVeicolo();
+                if (capacitaInizialeA + ((NodoCliente) findNodoById(id1,this.ottieniRotteBH())).getPickup() >= ((NodoCliente) findNodoById(id2,ottieniRotteBH())).getPickup() &&
+                        capacitaInizialeB + ((NodoCliente) findNodoById(id2,this.ottieniRotteBH())).getPickup() >= ((NodoCliente) findNodoById(id1,ottieniRotteBH())).getPickup()) {
+                    //Esegui lo scambio
+                    a.getNodi().set(a.getNodi().indexOf(temp), findNodoById(id2,this.ottieniRotteBH())); //Sostituisco nella prima rotta il nodo 1 col nodo 2
+                    b.getNodi().set(b.getNodi().indexOf(findNodoById(id2,this.ottieniRotteBH())), temp); //Sostituisco nella seconda rotta il nodo 2 col nodo 1
+                    a.setCapacitaVeicolo(capacitaInizialeA + ((NodoCliente) findNodoById(id1,this.ottieniRotteBH())).getPickup() - ((NodoCliente) findNodoById(id2,this.ottieniRotteBH())).getPickup());
+                    b.setCapacitaVeicolo(capacitaInizialeB + ((NodoCliente) findNodoById(id2,this.ottieniRotteBH())).getPickup() - ((NodoCliente) findNodoById(id1,this.ottieniRotteBH())).getPickup());
+                    a.aggiornaCosto();
+                    b.aggiornaCosto();
+                } else {
+                    return false;
+                }
+            }
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     *
+     * @param idNodo
+     * @param idRotta
+     * @param posizione
+     * @return
+     */
+    public boolean spostaBackhaul(int idNodo, int idRotta, int posizione) {
+       ArrayList<Rotta> rotte=this.ottieniRotteBH();
+        Nodo nodoTemp = this.findNodoById(idNodo,rotte);
+        Rotta a, b;
+
+
+        a = this.ottieniRotteBH().get(this.findRottaByNodo((findNodoById(idNodo,this.ottieniRotteBH())),this.ottieniRotteBH()));//la rotta dove devo rimuovere il nodo
+        b = this.ottieniRotteBH().get(idRotta);//la rotta dove devo aggiungere il nodo
+
+        if (a.equals(b)) {
+            //System.out.println("Non posso fare il relocate tra rotte uguali");
+            return false;
+        } else {
+            int capacitaInizialeA = a.getCapacitaVeicolo();//quando RIMUOVO il nodo devo aggiornare la capacità
+            int capacitaInizialeB = b.getCapacitaVeicolo();//quando AGGIUNGO il nodo devo aggiornare la capacità
+
+            if (capacitaInizialeB >= ((NodoCliente)nodoTemp).getPickup() && a.getNodi().size()>1) {
+                //Esegui il relocate
+                //elimino il nodo dalla rotta a e aggiorno la capacita e costo della rotta
+                a.rimuoviNodo(nodoTemp);
+                a.setCapacitaVeicolo(capacitaInizialeA+((NodoCliente) nodoTemp).getPickup());
+                a.aggiornaCosto();
+                //ora lo aggiungo alla rotta b e aggiorno le capacità e i costi
+                b.getNodi().set(posizione,nodoTemp);
+                b.setCapacitaVeicolo(capacitaInizialeB-((NodoCliente) nodoTemp).getPickup());
+                b.aggiornaCosto();
+                return  true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+
     public void stampaMatrice() {
         System.out.println("\nStampo Matrice Rotte/Nodi");
-        for (Rotta r : this.ottieniRotte()) {
+        for (Rotta r : this.ottieniRotteLH()) {
             System.out.println("R = " + r.getIndiceVeicolo());
             for (Nodo n : r.getNodi())
                 System.out.print(n.getId() + ", ");
