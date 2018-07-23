@@ -59,47 +59,32 @@ public class Main {
         }
 
         /**faccio il bestExchnge**/
-        double costoTotalePrima = lista.getCostoTotale();
+        double costoTotalePrima = lista.getCostoTotale("utfiyttfg");
         int h = 0;
         do {
-//            c
+
              h++;
              System.out.println("");
-            costoTotalePrima=lista.getCostoTotale();
-        System.out.println("Effettuo alcune mosse exchange e relocate ");
+            costoTotalePrima=lista.getCostoTotale("LH");
+             System.out.println("Effettuo alcune mosse exchange e relocate ");
+            lista.bestExchangeLinehaul();
+             lista.bestRelocateLinehaul();
+            // lista.bestExchangeLinehaul();
 
-             lista.bestExchangeBackhaul();
-            //lista.bestRelocateBackhaul();
-
-
-//            //num = 0; //TODO aggiungere visualizzazione del nodo deposito all'inizio e alla fine
-//            //int i = 0;
-//            //for (Rotta a : c) {
-//                //System.out.println("");
-//                //System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
-//                //a.stampaRotta(a.getNodi());
-//                //System.out.print(" Capacita = " + a.getCapacitaVeicolo());// lista.getVeicoli().get(a.getIndiceVeicolo()-1).getCapacita());
-//            //    num++;
-//            //    System.out.println();
-//            //    System.out.println("Costo prima = " + costi.get(i));
-//            //    i++;
-//            //    a.aggiornaCosto();
-//            //    System.out.println("Costo dopo = " + a.getCosto());
-//            //}
             System.out.println("________________________________________");
              System.out.println("Costo Totale Prima= " + costoTotalePrima);
-            System.out.println("Costo Totale Dopo = " + lista.getCostoTotale());
-            if(costoTotalePrima<lista.getCostoTotale())
+            System.out.println("Costo Totale Dopo = " + lista.getCostoTotale("LH"));
+            if(costoTotalePrima<lista.getCostoTotale("LH"))
                 System.out.println("Porca bagassa***********************************");
 //
-         }while(h<5);
+         }while(h<10);
 
         //////////////////////////////////////***************
         //System.out.println("ORA IL RELOCATE");
-        double costopri = lista.getCostoTotale();
-        int g = 0;
+//        double costopri = lista.getCostoTotale();
+//        int g = 0;
 
-            costopri=lista.getCostoTotale();
+//            costopri=lista.getCostoTotale();
             //lista.bestRelocate();
             //num = 0; //TODO aggiungere visualizzazione del nodo deposito all'inizio e alla fine
             //int i = 0;

@@ -140,7 +140,7 @@ public class ListaRotte implements Cloneable {
      * Effettua lo scambio di due nodi con costo minimo
      */
     public void bestExchangeLinehaul() {
-        double tempCosto = this.getCostoTotale();
+        double tempCosto = this.getCostoTotale("LH");
         int n1 = -1, n2 = -1;
         boolean flag = false;
         try {
@@ -159,8 +159,8 @@ public class ListaRotte implements Cloneable {
 
                                 l2.scambiaLinehaul(uno, due);
 
-                                if (l2.getCostoTotale() < tempCosto) {
-                                    tempCosto = l2.getCostoTotale();
+                                if (l2.getCostoTotale("LH") < tempCosto) {
+                                    tempCosto = l2.getCostoTotale("LH");
                                     n1 = this.ottieniRotteLH().get(i).getNodi().get(j).getId();
                                     n2 = this.ottieniRotteLH().get(k).getNodi().get(l).getId();
                                     flag = true;
@@ -183,6 +183,7 @@ public class ListaRotte implements Cloneable {
             } while (flag);
         } catch (Exception e) {
             System.out.println("ERRORE nella clonazione dell'oggetto di tipo ListaRotte");
+            System.exit(1);
             e.printStackTrace();
         }
     }
@@ -191,7 +192,7 @@ public class ListaRotte implements Cloneable {
      *
      */
     public void bestRelocateLinehaul() {
-        double tempCosto = this.getCostoTotale();
+        double tempCosto = this.getCostoTotale("LH");
         int idNodo=-1;
         int indice =-1;//la POSIZIONE nella quale si vuole aggiungere il nodo nella seconda rotta
         int indice_rotta = -1;
@@ -215,11 +216,11 @@ public class ListaRotte implements Cloneable {
 
                                 if (flag2) {//if flag2
 
-                                      if (l2.getCostoTotale() < tempCosto) {
-                                          tempCosto = l2.getCostoTotale();
+                                      if (l2.getCostoTotale("LH") < tempCosto) {
+                                          tempCosto = l2.getCostoTotale("LH");
                                           idNodo = uno;
                                           indice = l; //la posizione nella lista di nodi dove provo ad effettuare il relocate
-                                          indice_rotta=indice;
+                                          indice_rotta=k;
                                           flag = true;
                                     }
 
@@ -237,6 +238,7 @@ public class ListaRotte implements Cloneable {
                 }
             } while (flag);
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("ERRORE nella clonazione dell'oggetto di tipo ListaRotte");
            System.exit(1);
             e.printStackTrace();
@@ -295,10 +297,7 @@ public class ListaRotte implements Cloneable {
         b = this.ottieniRotteLH().get(this.findRottaByNodo(findNodoById(id2, this.ottieniRotteLH()),this.ottieniRotteLH()));
         if (id1 != id2) {
             if (a.equals(b)) {
-                //scambiaLinehaul i due nodi senza aggiornare la capacità residua
-                //System.out.println("");
-                //System.out.println("a.getNodi().indexOf(temp) = " + a.getNodi().indexOf(temp));
-                //System.out.println("findNodoById(id2) = "+findNodoById(id2));
+
                 a.getNodi().set(a.getNodi().indexOf(temp), findNodoById(id2,this.ottieniRotteLH())); //Sostituisco nella prima rotta il nodo 1 col nodo 2 ||||| Da problemi di indici: verificare index e id
                 b.getNodi().set(b.getNodi().indexOf(findNodoById(id2,this.ottieniRotteLH())), temp); //Sostituisco nella seconda rotta il nodo 2 col nodo 1
                 a.aggiornaCosto();
@@ -326,10 +325,17 @@ public class ListaRotte implements Cloneable {
         return true;
     }
 
-    public double getCostoTotale() {
+    public double getCostoTotale(String tipo) {
         double tot = 0;
-        for (Rotta r : this.ottieniRotteBH())//TODO costo totale dev essere di tutto non dei soli linehaul o dei soli backhaul
-            tot += r.getCosto();
+        if(tipo.equalsIgnoreCase("LH")) {
+            for (Rotta r : this.ottieniRotteLH()) {//TODO costo totale dev essere di tutto non dei soli linehaul o dei soli backhaul
+                tot += r.getCosto();
+            }
+        }else{
+            for (Rotta r : this.ottieniRotteBH()) {//TODO costo totale dev essere di tutto non dei soli linehaul o dei soli backhaul
+                tot += r.getCosto();
+            }
+        }
         return tot;
     }
 
@@ -356,7 +362,7 @@ public class ListaRotte implements Cloneable {
      */
 
     public void bestExchangeBackhaul() {
-        double tempCosto = this.getCostoTotale();
+        double tempCosto = this.getCostoTotale("BH");
         int n1 = -1, n2 = -1;
         boolean flag = false;
         try {
@@ -369,14 +375,15 @@ public class ListaRotte implements Cloneable {
                         for (int k = 0; k < this.ottieniRotteBH().size(); k++) {
                             for (int l = 0; l < this.ottieniRotteBH().get(k).getNodi().size(); l++) {
 
-                                int uno, due;
+                                int uno, due,tre , quattro;
                                 uno = this.ottieniRotteBH().get(i).getNodi().get(j).getId();//identificativo nodo da spostare
                                 due = this.ottieniRotteBH().get(k).getNodi().get(l).getId();
 
                                 l2.scambiaBackhaul(uno, due);
 
-                                if (l2.getCostoTotale() < tempCosto) {
-                                    tempCosto = l2.getCostoTotale();
+
+                                if (l2.getCostoTotale("BH") < tempCosto) {
+                                    tempCosto = l2.getCostoTotale("BH");
                                     n1 = this.ottieniRotteBH().get(i).getNodi().get(j).getId();
                                     n2 = this.ottieniRotteBH().get(k).getNodi().get(l).getId();
                                     flag = true;
@@ -399,6 +406,7 @@ public class ListaRotte implements Cloneable {
             } while (flag);
         } catch (Exception e) {
             System.out.println("ERRORE nella clonazione dell'oggetto di tipo ListaRotte");
+            System.exit(1);
             e.printStackTrace();
         }
     }
@@ -407,7 +415,7 @@ public class ListaRotte implements Cloneable {
      */
 
     public void bestRelocateBackhaul() {
-        double tempCosto = this.getCostoTotale();
+        double tempCosto = this.getCostoTotale("BH");
         int idNodo=-1;
         int indice =-1;//la POSIZIONE nella quale si vuole aggiungere il nodo nella seconda rotta
         int indice_rotta = -1;
@@ -431,11 +439,11 @@ public class ListaRotte implements Cloneable {
 
                                 if (flag2) {//if flag2
 
-                                    if (l2.getCostoTotale() < tempCosto) {
-                                        tempCosto = l2.getCostoTotale();
+                                    if (l2.getCostoTotale("BH") < tempCosto) {
+                                        tempCosto = l2.getCostoTotale("BH");
                                         idNodo = uno;
                                         indice = l; //la posizione nella lista di nodi dove provo ad effettuare il relocate
-                                        indice_rotta=indice;
+                                        indice_rotta=k;
                                         flag = true;
                                     }
 
@@ -480,8 +488,8 @@ public class ListaRotte implements Cloneable {
             } else {
                 int capacitaInizialeA = a.getCapacitaVeicolo();
                 int capacitaInizialeB = b.getCapacitaVeicolo();
-                if (capacitaInizialeA + ((NodoCliente) findNodoById(id1,this.ottieniRotteBH())).getPickup() >= ((NodoCliente) findNodoById(id2,ottieniRotteBH())).getPickup() &&
-                        capacitaInizialeB + ((NodoCliente) findNodoById(id2,this.ottieniRotteBH())).getPickup() >= ((NodoCliente) findNodoById(id1,ottieniRotteBH())).getPickup()) {
+                if ((capacitaInizialeA + ((NodoCliente) findNodoById(id1,this.ottieniRotteBH())).getPickup() - ((NodoCliente) findNodoById(id2,this.ottieniRotteBH())).getPickup() >= 0 &&
+                        capacitaInizialeB + ((NodoCliente) findNodoById(id2,this.ottieniRotteBH())).getPickup() - ((NodoCliente) findNodoById(id1,this.ottieniRotteBH())).getPickup() >= 0)) {
                     //Esegui lo scambio
                     a.getNodi().set(a.getNodi().indexOf(temp), findNodoById(id2,this.ottieniRotteBH())); //Sostituisco nella prima rotta il nodo 1 col nodo 2
                     b.getNodi().set(b.getNodi().indexOf(findNodoById(id2,this.ottieniRotteBH())), temp); //Sostituisco nella seconda rotta il nodo 2 col nodo 1
@@ -523,7 +531,7 @@ public class ListaRotte implements Cloneable {
             int capacitaInizialeA = a.getCapacitaVeicolo();//quando RIMUOVO il nodo devo aggiornare la capacità
             int capacitaInizialeB = b.getCapacitaVeicolo();//quando AGGIUNGO il nodo devo aggiornare la capacità
 
-            if (capacitaInizialeB >= ((NodoCliente)nodoTemp).getPickup() && a.getNodi().size()>1) {
+            if (capacitaInizialeB  - ((NodoCliente)nodoTemp).getPickup() >= 0 && a.getNodi().size()>1) {
                 //Esegui il relocate
                 //elimino il nodo dalla rotta a e aggiorno la capacita e costo della rotta
                 a.rimuoviNodo(nodoTemp);
@@ -556,10 +564,29 @@ public class ListaRotte implements Cloneable {
             ListaRotte listaRotte;
             listaRotte = (ListaRotte) super.clone();
 
+            listaRotte.costoTotale = this.costoTotale + 0;
             listaRotte.listaRotteIniziali = (ArrayList<Rotta>) this.listaRotteIniziali.clone();
             for (int i = 0; i < listaRotte.listaRotteIniziali.size(); i++) {
                 listaRotte.listaRotteIniziali.set(i, (Rotta) this.listaRotteIniziali.get(i).clone());
             }
+
+            listaRotte.listaRotteInizialiBackHaul=(ArrayList<Rotta>) this.listaRotteInizialiBackHaul.clone();
+
+            for (int i = 0; i < listaRotte.listaRotteInizialiBackHaul.size(); i++) {
+                listaRotte.listaRotteInizialiBackHaul.set(i, (Rotta) this.listaRotteInizialiBackHaul.get(i).clone());
+            }
+
+            listaRotte.listaRotteSingole=(ArrayList<Rotta>) this.listaRotteSingole.clone();
+
+            for (int i = 0; i < listaRotte.listaRotteSingole.size(); i++) {
+                listaRotte.listaRotteSingole.set(i, (Rotta) this.listaRotteSingole.get(i).clone());
+            }
+            listaRotte.listaRotteSingoleBackHaul=(ArrayList<Rotta>) this.listaRotteSingoleBackHaul.clone();
+            for (int i = 0; i < listaRotte.listaRotteSingoleBackHaul.size(); i++) {
+                listaRotte.listaRotteSingoleBackHaul.set(i, (Rotta) this.listaRotteSingoleBackHaul.get(i).clone());
+            }
+
+
             return listaRotte;
         } catch (CloneNotSupportedException e) {
             return null;
