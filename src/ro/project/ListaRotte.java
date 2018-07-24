@@ -576,11 +576,11 @@ public class ListaRotte implements Cloneable {
         Double costo = -1.0;
         Rotta temp = null;
         for (Rotta a: lh) {
-            ai = lh.indexOf(a);
+            ai = a.getIndiceVeicolo();
             for (Rotta b: bh) {
-                bi = bh.indexOf(b);
+                bi = b.getIndiceVeicolo();
                 //if (a.getIndiceVeicolo()==b.getIndiceVeicolo()){
-                if (costo == -1.0 || costo < getCostoDifferenzaRotte(a,b)){
+                if ((costo == -1.0 || costo < getCostoDifferenzaRotte(a,b)) && bi != ai){
                     costo = getCostoDifferenzaRotte(a,b);
                     temp = b;
                 }
