@@ -25,16 +25,15 @@ public class Rotta implements  Cloneable {
         this.nodi.add(n);
     }
 
-    public void chiudiRotta() {
-        Nodo deposito = nodi.get(0);
-        this.costo += MatriceDistanze.getInstanza().getDistanza(deposito.getId(), nodi.get(nodi.size() - 1).getId());
-        this.nodi.add(deposito);
+    public void chiudiRotta(Nodo nodoDeposito) {
+        this.costo += MatriceDistanze.getInstanza().getDistanza(nodoDeposito.getId(), nodi.get(nodi.size() - 1).getId());
+        this.nodi.add(nodoDeposito);
     }
 
     public void apriRotta(Nodo nodoDeposito) {
 
         this.costo += MatriceDistanze.getInstanza().getDistanza(nodoDeposito.getId(), nodi.get(nodi.size() - 1).getId());
-        this.nodi.set(0,nodoDeposito);
+        this.nodi.add(0,nodoDeposito);
     }
 
     public Double getCosto() {
@@ -82,7 +81,7 @@ public class Rotta implements  Cloneable {
         this.indiceVeicolo = indiceVeicolo;
     }
 
-    public void merge(Rotta r2){
+    public void mergeRotte(Rotta r2){
         for(Nodo n : r2.getNodi()){
             this.aggiungiAllaRotta(n);
         }

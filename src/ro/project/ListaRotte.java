@@ -68,7 +68,7 @@ public class ListaRotte implements Cloneable {
                 Rotta rottaTemp = listaRotteSingole.get(random);
                 int capacitaNodo = ((NodoCliente) rottaTemp.getNodi().get(0)).getDelivery();
                 if (listaRotteIniziali.get(i).getCapacitaVeicolo() > capacitaNodo) {
-                    listaRotteIniziali.get(i).merge(rottaTemp);
+                    listaRotteIniziali.get(i).mergeRotte(rottaTemp);
                     listaRotteIniziali.get(i).setCapacitaVeicolo(listaRotteIniziali.get(i).getCapacitaVeicolo() - capacitaNodo);
                     listaRotteSingole.remove(random);
                 }
@@ -113,7 +113,7 @@ public class ListaRotte implements Cloneable {
                 Rotta rottaTemp = listaRotteSingoleBackHaul.get(random);
                 int capacitaNodo = ((NodoCliente) rottaTemp.getNodi().get(0)).getPickup();
                 if (listaRotteInizialiBackHaul.get(i).getCapacitaVeicolo() > capacitaNodo) {
-                    listaRotteInizialiBackHaul.get(i).merge(rottaTemp);
+                    listaRotteInizialiBackHaul.get(i).mergeRotte(rottaTemp);
                     listaRotteInizialiBackHaul.get(i).setCapacitaVeicolo(listaRotteInizialiBackHaul.get(i).getCapacitaVeicolo() - capacitaNodo);
                     listaRotteSingoleBackHaul.remove(random);
                     int y = 8 + 1; //TODO DA RIMUOVERE
@@ -577,12 +577,12 @@ public class ListaRotte implements Cloneable {
             for (Rotta b: bh) {
                 if (a.getIndiceVeicolo()==b.getIndiceVeicolo()){
                     for (Nodo nodo: b.getNodi()) {
-                        a.getNodi().set(a.getNodi().size()-1,nodo);
+                        a.getNodi().add(nodo);
                         a.aggiornaCosto();
                     }
 
-                    //a.apriRotta(this.nodoDeposito);
-                   // a.chiudiRotta();
+                    a.apriRotta(this.nodoDeposito);
+                    a.chiudiRotta(this.nodoDeposito);
 
                 }
             }
