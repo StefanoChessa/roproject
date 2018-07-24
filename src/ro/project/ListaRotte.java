@@ -572,23 +572,36 @@ public class ListaRotte implements Cloneable {
 
         ArrayList<Rotta>  lh= this.ottieniRotteLH();
         ArrayList<Rotta>  bh= this.ottieniRotteBH();
-
-            for (Rotta a: lh) {
+        int ai, bi;
+        Double costo = -1.0;
+        Rotta temp = null;
+        for (Rotta a: lh) {
+            ai = lh.indexOf(a);
             for (Rotta b: bh) {
-                if (a.getIndiceVeicolo()==b.getIndiceVeicolo()){
-                    for (Nodo nodo: b.getNodi()) {
-                        a.getNodi().add(nodo);
-                        a.aggiornaCosto();
-                    }
-
-                    a.apriRotta(this.nodoDeposito);
-                    a.chiudiRotta(this.nodoDeposito);
-
+                bi = bh.indexOf(b);
+                //if (a.getIndiceVeicolo()==b.getIndiceVeicolo()){
+                if (costo == -1.0 || costo < getCostoDifferenzaRotte(a,b)){
+                    costo = getCostoDifferenzaRotte(a,b);
+                    temp = b;
                 }
+            }
+            if(temp != null) {
+                for (Nodo nodo : temp.getNodi()) {
+                    a.getNodi().add(nodo);
+                    a.aggiornaCosto();
+                }
+                a.apriRotta(this.nodoDeposito);
+                a.chiudiRotta(this.nodoDeposito);
             }
         }
         this.rotteFinali=lh;
 
+    }
+
+    public Double getCostoDifferenzaRotte(Rotta a, Rotta b){
+        int id_ultimo = a.getNodi().size()-1;
+        MatriceDistanze.getInstanza().getDistanza(a.getNodi().get(id_ultimo).getId(),b.getNodi().get(0).getId());
+        return 0.0;
     }
 
     public Object clone() {

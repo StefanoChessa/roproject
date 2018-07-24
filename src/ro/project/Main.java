@@ -95,8 +95,8 @@ public class Main {
         //}while(h<2);
 
         lista.merge();
-        ArrayList<Rotta> rottefinali=lista.ottieniRotteLH();
-        int nodiTotaliLH = 0;
+        ArrayList<Rotta> rottefinali=lista.getRotteFinali();
+        int nodiTotali = 0;
         for(Rotta a:rottefinali){
             System.out.println("");
             System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
@@ -108,9 +108,9 @@ public class Main {
             a.aggiornaCosto();
             System.out.println("Costo dopo = " + a.getCosto());
 
-            nodiTotaliLH += a.getNodi().size();
+            nodiTotali += a.getNodi().size();
         }
 
-        System.out.print("Nodi totali dopo " + nodiTotaliLH);
+        System.out.print("Nodi totali dopo " + nodiTotali);
     }
 }
