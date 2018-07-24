@@ -16,15 +16,20 @@ public class ListaRotte implements Cloneable {
     private Double costoTotale = 0.0;
     private ArrayList<Nodo> nodiClienti;
     private ArrayList<Nodo> nodiClientiBackHaul;
+    private ArrayList<Rotta> rotteFinali;
     private Nodo nodoDeposito;
-    //private ArrayList<Veicolo> veicoli;
-    //private ArrayList<Veicolo> veicoliBH;
+
+
+
+
+
 
     public ListaRotte() {
         this.listaRotteSingole = new ArrayList<>();
         this.listaRotteIniziali = new ArrayList<>();
         this.listaRotteSingoleBackHaul = new ArrayList<>();
         this.listaRotteInizialiBackHaul = new ArrayList<>();
+        this.rotteFinali=new ArrayList<>();
         //this.veicoli = new ArrayList<>();
         //this.veicoliBH = new ArrayList<>();
     }
@@ -557,6 +562,33 @@ public class ListaRotte implements Cloneable {
                 System.out.print(n.getId() + ", ");
 
         }
+    }
+
+    public ArrayList<Rotta> getRotteFinali() {
+        return rotteFinali;
+    }
+
+    public void merge(){
+
+        ArrayList<Rotta>  lh= this.ottieniRotteLH();
+        ArrayList<Rotta>  bh= this.ottieniRotteBH();
+
+            for (Rotta a: lh) {
+            for (Rotta b: bh) {
+                if (a.getIndiceVeicolo()==b.getIndiceVeicolo()){
+                    for (Nodo nodo: b.getNodi()) {
+                        a.getNodi().set(a.getNodi().size()-1,nodo);
+                        a.aggiornaCosto();
+                    }
+
+                    //a.apriRotta(this.nodoDeposito);
+                   // a.chiudiRotta();
+
+                }
+            }
+        }
+        this.rotteFinali=lh;
+
     }
 
     public Object clone() {

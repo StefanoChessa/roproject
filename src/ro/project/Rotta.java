@@ -31,6 +31,12 @@ public class Rotta implements  Cloneable {
         this.nodi.add(deposito);
     }
 
+    public void apriRotta(Nodo nodoDeposito) {
+
+        this.costo += MatriceDistanze.getInstanza().getDistanza(nodoDeposito.getId(), nodi.get(nodi.size() - 1).getId());
+        this.nodi.set(0,nodoDeposito);
+    }
+
     public Double getCosto() {
         this.aggiornaCosto();
         return this.costo;

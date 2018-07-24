@@ -60,25 +60,43 @@ public class Main {
 
         /**faccio il bestExchnge**/
         double costoTotalePrima = lista.getCostoTotale("utfiyttfg");
+        double cosP = lista.getCostoTotale("utfiyttfg");
         int h = 0;
         do {
 
              h++;
              System.out.println("");
             costoTotalePrima=lista.getCostoTotale("LH");
+            cosP = lista.getCostoTotale("utfiyttfg");
              System.out.println("Effettuo alcune mosse exchange e relocate ");
-            lista.bestExchangeLinehaul();
+             lista.bestExchangeLinehaul();
              lista.bestRelocateLinehaul();
+             lista.bestExchangeBackhaul();
+             lista.bestRelocateBackhaul();
+
             // lista.bestExchangeLinehaul();
 
             System.out.println("________________________________________");
              System.out.println("Costo Totale Prima= " + costoTotalePrima);
             System.out.println("Costo Totale Dopo = " + lista.getCostoTotale("LH"));
-            if(costoTotalePrima<lista.getCostoTotale("LH"))
+            if(costoTotalePrima<lista.getCostoTotale("LH") || cosP<lista.getCostoTotale("luyvg"))
                 System.out.println("Porca bagassa***********************************");
 //
-         }while(h<10);
+         }while(h<2);
 
+        lista.merge();
+        ArrayList<Rotta> rottefinali=lista.ottieniRotteLH();
+        for(Rotta a:rottefinali){
+            System.out.println("");
+            System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
+            a.stampaRotta(a.getNodi());
+            System.out.print(" Capacita = " + a.getCapacitaVeicolo());// lista.getVeicoli().get(a.getIndiceVeicolo()-1).getCapacita());
+            num++;
+            System.out.println();
+            System.out.println("Costo prima = " + a.getCosto());
+            a.aggiornaCosto();
+            System.out.println("Costo dopo = " + a.getCosto());
+        }
         //////////////////////////////////////***************
         //System.out.println("ORA IL RELOCATE");
 //        double costopri = lista.getCostoTotale();
