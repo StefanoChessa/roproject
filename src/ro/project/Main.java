@@ -112,5 +112,6 @@ public class Main {
         }
 
         System.out.print("Nodi totali dopo " + nodiTotali);
+        System.out.println("Costo totale = " + lista.getCostoTotale("F"));
     }
 }

@@ -336,8 +336,12 @@ public class ListaRotte implements Cloneable {
             for (Rotta r : this.ottieniRotteLH()) {//TODO costo totale dev essere di tutto non dei soli linehaul o dei soli backhaul
                 tot += r.getCosto();
             }
-        }else{
+        }else if (tipo.equalsIgnoreCase("BH")){
             for (Rotta r : this.ottieniRotteBH()) {//TODO costo totale dev essere di tutto non dei soli linehaul o dei soli backhaul
+                tot += r.getCosto();
+            }
+        }else if (tipo.equalsIgnoreCase("F")){
+            for (Rotta r : this.getRotteFinali()) {//TODO costo totale dev essere di tutto non dei soli linehaul o dei soli backhaul
                 tot += r.getCosto();
             }
         }
