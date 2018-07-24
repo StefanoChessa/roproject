@@ -20,98 +20,102 @@ public class Main {
 
         MatriceDistanze matr = new MatriceDistanze(file.getTuttiNodi());
         matr.creaMatrice();
+        int numero = 0;
+        ArrayList<ListaRotte> percorsi = new ArrayList();
+        do {
+            numero++;
+            ListaRotte lista = new ListaRotte();
+            lista.inizializzaLineHaul(file);
+            lista.inizializzaBackHaul(file);
 
-        ListaRotte lista = new ListaRotte();
-        lista.inizializzaLineHaul(file);
-        lista.inizializzaBackHaul(file);
+            //prova di stampa dei nodi visitati da ogni rotta
+            ArrayList<Rotta> c = lista.ottieniRotteLH();
 
-        //prova di stampa dei nodi visitati da ogni rotta
-        ArrayList<Rotta> c = lista.ottieniRotteLH();
+            int numLH = 0; //TODO aggiungere visualizzazione del nodo deposito all'inizio e alla fine
+            /**Prova stampa linehaul**/
 
-        int numLH = 0; //TODO aggiungere visualizzazione del nodo deposito all'inizio e alla fine
-        /**Prova stampa linehaul**/
+            for (Rotta a : c) {
+                System.out.println("");
+                System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
+                a.stampaRotta(a.getNodi());
+                System.out.print(" Capacita = " + a.getCapacitaVeicolo());// lista.getVeicoli().get(a.getIndiceVeicolo()-1).getCapacita());
+                //num++;
+                System.out.println();
+                System.out.println("Costo prima = " + a.getCosto());
+                a.aggiornaCosto();
+                System.out.println("Costo dopo = " + a.getCosto());
+                numLH += a.getNodi().size();
+            }
+            System.out.print("Nodi totali prima LH " + numLH);
 
-        for(Rotta a:c){
-            System.out.println("");
-            System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
-            a.stampaRotta(a.getNodi());
-            System.out.print(" Capacita = " + a.getCapacitaVeicolo());// lista.getVeicoli().get(a.getIndiceVeicolo()-1).getCapacita());
-            //num++;
+
+            /**Prova stampa backhaul**/
             System.out.println();
-            System.out.println("Costo prima = " + a.getCosto());
-            a.aggiornaCosto();
-            System.out.println("Costo dopo = " + a.getCosto());
-            numLH+=a.getNodi().size();
-        }
-        System.out.print("Nodi totali prima LH " + numLH);
+            System.out.println("______________________________________________________");
+            ArrayList<Rotta> b = lista.ottieniRotteBH();
+            int numBH = 0;
+            for (Rotta a : b) {
+                System.out.println("");
+                System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
 
+                a.stampaRotta(a.getNodi());
+                System.out.print(" Capacita = " + a.getCapacitaVeicolo());
+                //num++;
+                System.out.println();
+                System.out.println("Costo prima = " + a.getCosto());
+                a.aggiornaCosto();
+                System.out.println("Costo dopo = " + a.getCosto());
+                numBH += a.getNodi().size();
+            }
 
+            System.out.print("Nodi totali prima BH " + numBH);
 
-        /**Prova stampa backhaul**/
-        System.out.println();
-        System.out.println("______________________________________________________");
-        ArrayList<Rotta> b = lista.ottieniRotteBH();
-        int numBH = 0;
-        for(Rotta a:b){
+            /**faccio il bestExchnge o bestRelocate**/
+            double costoTotalePrimaLH = lista.getCostoTotale("LH");
+            double costoTotalePrimaBH = lista.getCostoTotale("BH");
+            //int h = 0;
+            //do {
+
+            //h++;
             System.out.println("");
-            System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
+            costoTotalePrimaLH = lista.getCostoTotale("LH");
+            costoTotalePrimaBH = lista.getCostoTotale("BH");
+            System.out.println("Applico l'algoritmo best Improovement RL o EX");
+            //lista.bestExchangeLinehaul();
+            lista.bestRelocateLinehaul();
+            //lista.bestExchangeBackhaul();
+            lista.bestRelocateBackhaul();
 
-            a.stampaRotta(a.getNodi());
-            System.out.print(" Capacita = " + a.getCapacitaVeicolo());
-            //num++;
-            System.out.println();
-            System.out.println("Costo prima = " + a.getCosto());
-            a.aggiornaCosto();
-            System.out.println("Costo dopo = " + a.getCosto());
-            numBH += a.getNodi().size();
-        }
+            System.out.println("________________________________________");
+            System.out.println("Costo Totale Prima LineHaul= " + costoTotalePrimaLH);
+            System.out.println("Costo Totale Dopo LineHaul = " + lista.getCostoTotale("LH"));
+            System.out.println("Costo Totale Prima= " + costoTotalePrimaLH);
+            System.out.println("Costo Totale Dopo = " + lista.getCostoTotale("LH"));
+            if (costoTotalePrimaLH < lista.getCostoTotale("LH") || costoTotalePrimaBH < lista.getCostoTotale("BH"))
+                System.out.println("ATTENZIONE***********************************");
 
-        System.out.print("Nodi totali prima BH " + numBH);
+            //}while(h<2);
 
-        /**faccio il bestExchnge o bestRelocate**/
-        double costoTotalePrimaLH = lista.getCostoTotale("LH");
-        double costoTotalePrimaBH = lista.getCostoTotale("BH");
-        //int h = 0;
-        //do {
+            lista.merge();
+            ArrayList<Rotta> rottefinali = lista.getRotteFinali();
+            int nodiTotali = 0;
+            for (Rotta a : rottefinali) {
+                System.out.println("");
+                System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
+                a.stampaRotta(a.getNodi());
+                System.out.print(" Capacita = " + a.getCapacitaVeicolo());// lista.getVeicoli().get(a.getIndiceVeicolo()-1).getCapacita());
 
-        //h++;
-        System.out.println("");
-        costoTotalePrimaLH = lista.getCostoTotale("LH");
-        costoTotalePrimaBH = lista.getCostoTotale("BH");
-        System.out.println("Applico l'algoritmo best Improovement RL o EX");
-        //lista.bestExchangeLinehaul();
-        lista.bestRelocateLinehaul();
-        //lista.bestExchangeBackhaul();
-        lista.bestRelocateBackhaul();
+                System.out.println();
+                System.out.println("Costo prima = " + a.getCosto());
+                a.aggiornaCosto();
+                System.out.println("Costo dopo = " + a.getCosto());
 
-        System.out.println("________________________________________");
-        System.out.println("Costo Totale Prima LineHaul= " + costoTotalePrimaLH);
-        System.out.println("Costo Totale Dopo LineHaul = " + lista.getCostoTotale("LH"));
-        System.out.println("Costo Totale Prima= " + costoTotalePrimaLH);
-        System.out.println("Costo Totale Dopo = " + lista.getCostoTotale("LH"));
-        if(costoTotalePrimaLH<lista.getCostoTotale("LH") || costoTotalePrimaBH<lista.getCostoTotale("BH"))
-        System.out.println("ATTENZIONE***********************************");
+                nodiTotali += a.getNodi().size();
+            }
 
-        //}while(h<2);
-
-        lista.merge();
-        ArrayList<Rotta> rottefinali=lista.getRotteFinali();
-        int nodiTotali = 0;
-        for(Rotta a:rottefinali){
-            System.out.println("");
-            System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
-            a.stampaRotta(a.getNodi());
-            System.out.print(" Capacita = " + a.getCapacitaVeicolo());// lista.getVeicoli().get(a.getIndiceVeicolo()-1).getCapacita());
-
-            System.out.println();
-            System.out.println("Costo prima = " + a.getCosto());
-            a.aggiornaCosto();
-            System.out.println("Costo dopo = " + a.getCosto());
-
-            nodiTotali += a.getNodi().size();
-        }
-
-        System.out.print("Nodi totali dopo " + nodiTotali);
-        System.out.println("Costo totale = " + lista.getCostoTotale("F"));
+            System.out.print("Nodi totali dopo " + nodiTotali);
+            System.out.println("Costo totale = " + lista.getCostoTotale("F"));
+            percorsi.add(lista);
+        }while(numero<10);
     }
 }
