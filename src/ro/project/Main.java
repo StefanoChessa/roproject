@@ -85,7 +85,7 @@ public class Main {
          }while(h<2);
 
         lista.merge();
-        ArrayList<Rotta> rottefinali=lista.ottieniRotteLH();
+        ArrayList<Rotta> rottefinali=lista.getRotteFinali();
         for(Rotta a:rottefinali){
             System.out.println("");
             System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
