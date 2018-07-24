@@ -30,6 +30,7 @@ public class Main {
 
         int num=0; //TODO aggiungere visualizzazione del nodo deposito all'inizio e alla fine
         /**Prova stampa linehaul**/
+
         for(Rotta a:c){
             System.out.println("");
             System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
@@ -40,7 +41,9 @@ public class Main {
             System.out.println("Costo prima = " + a.getCosto());
             a.aggiornaCosto();
             System.out.println("Costo dopo = " + a.getCosto());
+            num+=a.getNodi().size();
         }
+        System.out.print("Nodi totali prima " + num);
 
 
 
@@ -70,8 +73,8 @@ public class Main {
             cosP = lista.getCostoTotale("utfiyttfg");
              System.out.println("Effettuo alcune mosse exchange e relocate ");
              lista.bestExchangeLinehaul();
-             lista.bestRelocateLinehaul();
-             lista.bestExchangeBackhaul();
+             //lista.bestRelocateLinehaul();
+            // lista.bestExchangeBackhaul();
              lista.bestRelocateBackhaul();
 
             // lista.bestExchangeLinehaul();
@@ -84,8 +87,9 @@ public class Main {
 //
          }while(h<2);
 
-        lista.merge();
-        ArrayList<Rotta> rottefinali=lista.getRotteFinali();
+        //lista.merge();
+        ArrayList<Rotta> rottefinali=lista.ottieniRotteLH();
+        int nodiTot=0;
         for(Rotta a:rottefinali){
             System.out.println("");
             System.out.print("Rotta " + a.getIndiceVeicolo() + ": ");
@@ -96,7 +100,11 @@ public class Main {
             System.out.println("Costo prima = " + a.getCosto());
             a.aggiornaCosto();
             System.out.println("Costo dopo = " + a.getCosto());
+
+            nodiTot+=a.getNodi().size();
         }
+
+        System.out.print("Nodi totali dopo " + nodiTot);
         //////////////////////////////////////***************
         //System.out.println("ORA IL RELOCATE");
 //        double costopri = lista.getCostoTotale();

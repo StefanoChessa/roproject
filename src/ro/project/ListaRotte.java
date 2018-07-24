@@ -278,7 +278,7 @@ public class ListaRotte implements Cloneable {
                     a.setCapacitaVeicolo(capacitaInizialeA +((NodoCliente) nodoTemp).getDelivery());
                     a.aggiornaCosto();
                     //ora lo aggiungo alla rotta b e aggiorno le capacità e i costi
-                    b.getNodi().set(posizione,nodoTemp);
+                    b.getNodi().add(posizione,nodoTemp);
                     b.setCapacitaVeicolo(capacitaInizialeB-((NodoCliente) nodoTemp).getDelivery());
                     b.aggiornaCosto();
                     return  true;
@@ -543,7 +543,7 @@ public class ListaRotte implements Cloneable {
                 a.setCapacitaVeicolo(capacitaInizialeA+((NodoCliente) nodoTemp).getPickup());
                 a.aggiornaCosto();
                 //ora lo aggiungo alla rotta b e aggiorno le capacità e i costi
-                b.getNodi().set(posizione,nodoTemp);
+                b.getNodi().add(posizione,nodoTemp);
                 b.setCapacitaVeicolo(capacitaInizialeB-((NodoCliente) nodoTemp).getPickup());
                 b.aggiornaCosto();
                 return  true;
