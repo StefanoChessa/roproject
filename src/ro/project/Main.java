@@ -31,7 +31,7 @@ public class Main {
 
 
 
-        for(int i=0; i<listaFile.size();i++) {//for dei files
+        for(int i=20; i<listaFile.size();i++) {//for dei files
             filename=listaFile.get(i);
 
             System.out.println(
@@ -39,12 +39,14 @@ public class Main {
                             filename + "############ \n");
 
             FileUploader file = new FileUploader();
+            SolutionUploader sol= new SolutionUploader();
             //Scanner scanner = new Scanner(System.in);
 
             //System.out.println("Inserisci il nome del file da importare (non includere il .txt):");
             //filename = scanner.nextLine();
 
             file.caricaIstanza(filename);
+            sol.caricaIstanza(filename);
 
 
             MatriceDistanze matr = new MatriceDistanze(file.getTuttiNodi());
