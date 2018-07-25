@@ -43,4 +43,8 @@ public class SolutionUploader {
 
         }
     }
+
+    double returnZP(){
+        return this.costoTotaleSoluzione;
+    }
 }

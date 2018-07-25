@@ -93,6 +93,10 @@ public class Main {
             System.out.print("Nodi totali dopo " + nodiTotali);
             System.out.println("Costo totale = " + listaMigliore.getCostoTotale("F"));
 
+            Double errore = (listaMigliore.getCostoTotale("F") - sol.returnZP()) / Math.abs(sol.returnZP());
+
+
+
         }//fine for dei file
     }
 }
