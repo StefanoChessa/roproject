@@ -91,7 +91,7 @@ public class ListaRotte implements Cloneable {
             r.aggiungiAllaRotta(cliente);
             listaRotteSingoleBackHaul.add(r);
         }
-        System.out.println("Numero BackHaul totali: " + listaRotteSingoleBackHaul.size());
+
         int sizeBH = listaRotteSingoleBackHaul.size();
         for (int i = 0; i < istanza.getNumeroVeicoli() && !listaRotteSingoleBackHaul.isEmpty(); i++) {
             Rotta rottaIniziale = listaRotteSingoleBackHaul.get(0);
@@ -102,10 +102,9 @@ public class ListaRotte implements Cloneable {
             rottaIniziale.setCapacitaVeicolo(newCapacita);
             //veicoliBH.add(veicolo);
             listaRotteSingoleBackHaul.remove(0);
-            //int y =8+1; //TODO DA RIMUOVERE
-            //System.out.print("|");
+
         }
-        System.out.println("Numero BackHaul rimanenti: " + listaRotteSingoleBackHaul.size());
+
         while (!listaRotteSingoleBackHaul.isEmpty()) {
             for (int i = 0; i < istanza.getNumeroVeicoli() && !listaRotteSingoleBackHaul.isEmpty(); i++) {
 
@@ -116,10 +115,10 @@ public class ListaRotte implements Cloneable {
                     listaRotteInizialiBackHaul.get(i).mergeRotte(rottaTemp);
                     listaRotteInizialiBackHaul.get(i).setCapacitaVeicolo(listaRotteInizialiBackHaul.get(i).getCapacitaVeicolo() - capacitaNodo);
                     listaRotteSingoleBackHaul.remove(random);
-                    int y = 8 + 1; //TODO DA RIMUOVERE
+
                 }
             }
-            System.out.println("Sto mettendo BackHaul");
+
         }
     }
 
