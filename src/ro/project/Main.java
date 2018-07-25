@@ -2,8 +2,7 @@
 package ro.project;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -19,16 +18,26 @@ public class Main {
             }
         }
 
-        for (int j = 0; j < listaFile.size(); j++) {
-            System.out.println(listaFile.get(j));
-        }
 
 
 
         String filename;
 
+        Collections.sort(listaFile, new Comparator<String>() {
+            public int compare(String s1, String s2) {
+                return s1.compareTo(s2);
+            }
+        });
+
+
+
         for(int i=0; i<listaFile.size();i++) {//for dei files
             filename=listaFile.get(i);
+
+            System.out.println(
+                    "\n############### Sto calcolando il file " +
+                            filename + "############ \n");
+
             FileUploader file = new FileUploader();
             //Scanner scanner = new Scanner(System.in);
 
