@@ -59,7 +59,7 @@ public class Main {
                 do {
                     numero++;
                     ListaRotte lista = new ListaRotte();
-                    lista.inizializzaLineHaul(file);
+                    while(lista.inizializzaLineHaul(file));
                     lista.inizializzaBackHaul(file);
                     //lista.bestExchangeLinehaul();
                     lista.bestRelocateLinehaul();

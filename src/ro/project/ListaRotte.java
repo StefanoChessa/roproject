@@ -33,8 +33,8 @@ public class ListaRotte implements Cloneable {
     /**
      * @param istanza
      */
-    public void inizializzaLineHaul(FileUploader istanza) {
-        boolean flag = false;
+    public boolean inizializzaLineHaul(FileUploader istanza) {
+        boolean flagB = false;
         this.nodiClienti = istanza.getLineHaulList();
         this.nodoDeposito = istanza.getNodoDeposito();
 
@@ -59,8 +59,8 @@ public class ListaRotte implements Cloneable {
                 listaRotteSingole.remove(random);
             }
 
-
-        while (listaRotteSingole.size() > 0  ) {
+        int flag = 0;
+        while (listaRotteSingole.size() > 0 && flag < 4 ) {
             for (int i = 0; i < listaRotteSingole.size(); i++) {
 
                 int random = (new Random()).nextInt(listaRotteSingole.size());
@@ -71,23 +71,29 @@ public class ListaRotte implements Cloneable {
                     listaRotteIniziali.get(randomRotta).mergeRotte(rottaTemp);
                     listaRotteIniziali.get(randomRotta).setCapacitaVeicolo(listaRotteIniziali.get(randomRotta).getCapacitaVeicolo() - capacitaNodo);
                     listaRotteSingole.remove(random);
+                    flag = 0;
                 }
             }
+            flag ++;
         }
 
 
-
-            if (listaRotteSingole.isEmpty()) {
-                // controllaVincolo(listaRotteSingole,listaRotteIniziali);
-                System.out.println("ok " + listaRotteSingole.size());
-                flag = true;
-            }
+        /*
+        if (listaRotteSingole.isEmpty()) {
+            // controllaVincolo(listaRotteSingole,listaRotteIniziali);
+            System.out.println("ok " + listaRotteSingole.size());
+            flagB = true;
+        }
             //da rimuovere solo per il push
         if (listaRotteSingole.isEmpty()) {
             // controllaVincolo(listaRotteSingole,listaRotteIniziali);
             System.out.println("ok " + listaRotteSingole.size());
-            flag = true;
+            flagB = true;
         }
+        */
+
+        if (flag>2) return false;
+        else return true;
 
     }
 
