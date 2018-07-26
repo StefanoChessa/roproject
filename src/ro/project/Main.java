@@ -31,8 +31,8 @@ public class Main {
 
 
 
-        for(int i=0; i<listaFile.size();i++) {//for dei files
-            if(!listaFile.get(i).contains("1") && !listaFile.get(i).contains("C2") && !listaFile.get(i).contains("D2") && !listaFile.get(i).contains("D3")
+        for(int i=0; i<1;i++) {//for dei files
+            if(!listaFile.get(i).contains("C2") && !listaFile.get(i).contains("D2") && !listaFile.get(i).contains("D3")
                     && !listaFile.get(i).contains("G2") && !listaFile.get(i).contains("I2") && !listaFile.get(i).contains("K2") &&
                     !listaFile.get(i).contains("M2") && !listaFile.get(i).contains("N2")) {
                 filename = listaFile.get(i);
