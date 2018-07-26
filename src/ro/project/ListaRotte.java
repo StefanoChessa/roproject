@@ -38,11 +38,6 @@ public class ListaRotte implements Cloneable {
         this.nodiClienti = istanza.getLineHaulList();
         this.nodoDeposito = istanza.getNodoDeposito();
 
-        //do {
-            flag = false;
-
-
-
             for (Nodo cliente : nodiClienti) {
                 Rotta r = new Rotta(-1);
                 r.aggiungiAllaRotta(cliente);
@@ -88,36 +83,8 @@ public class ListaRotte implements Cloneable {
                 flag = true;
             }
 
-
-        //} while (flag);
-       // System.out.println("tutti visitati" + listaRotteSingole.size());
-
     }
-//
-//    public void controllaVincolo(ArrayList<Rotta> nodiNonVisitati, ArrayList<Rotta> rotteEsistenti){
-//
-//        for(int i=0;i<nodiNonVisitati.size();i++){
-//            Nodo nodo= nodiNonVisitati.get(i).getNodi().get(0);
-//            for(int j=0;j<rotteEsistenti.size();j++){
-//                int capacita=rotteEsistenti.get(j).getCapacitaVeicolo();
-//                Rotta a=rotteEsistenti.get(j);
-//                 for(int k=0;k< a.getNodi().size();k++){
-//                     Nodo n= ((NodoCliente)a.getNodi().get(k));
-//                     int capacitaNodo= ((NodoCliente)a.getNodi().get(k)).getDelivery();
-//                     if(capacita + capacitaNodo > ((NodoCliente)nodo).getDelivery()){
-//                         Rotta r = new Rotta(-1);
-//                         r.aggiungiAllaRotta(n);
-//                         a.getNodi().set(a.getNodi().indexOf(n),nodo);
-//                         a.setCapacitaVeicolo(a.getCapacitaVeicolo() + capacitaNodo - ((NodoCliente)nodo).getDelivery());
-//                         nodiNonVisitati.remove(nodiNonVisitati.get(i));
-//                         nodiNonVisitati.add(r);
-//
-//                     }
-//                 }
-//            }
-//
-//        }
-//    }
+
 
     /**
      * @param istanza
