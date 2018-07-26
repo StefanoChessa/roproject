@@ -61,22 +61,18 @@ public class ListaRotte implements Cloneable {
             //veicoli.add(veicolo);
             listaRotteSingole.remove(0);
         }
-        int flag = 0;
-        while (listaRotteSingole.size() > 0 && flag < 3) {
+        while (listaRotteSingole.size() > 0) {
             for (int i = 0; i < istanza.getNumeroVeicoli() && listaRotteSingole.size() > 0; i++) {
-                int random;
-                if(listaRotteSingole.size() < 2) random = 0;
-                else random = (new Random()).nextInt(listaRotteSingole.size()-1);
+
+                int random = (new Random()).nextInt(listaRotteSingole.size());
                 Rotta rottaTemp = listaRotteSingole.get(random);
                 int capacitaNodo = ((NodoCliente) rottaTemp.getNodi().get(0)).getDelivery();
                 if (listaRotteIniziali.get(i).getCapacitaVeicolo() > capacitaNodo) {
                     listaRotteIniziali.get(i).mergeRotte(rottaTemp);
                     listaRotteIniziali.get(i).setCapacitaVeicolo(listaRotteIniziali.get(i).getCapacitaVeicolo() - capacitaNodo);
                     listaRotteSingole.remove(random);
-                    flag = 0;
                 }
             }
-            flag ++;
         }
 
     }
@@ -344,7 +340,7 @@ public class ListaRotte implements Cloneable {
             for (Rotta r : this.ottieniRotteBH()) {//TODO costo totale dev essere di tutto non dei soli linehaul o dei soli backhaul
                 tot += r.getCosto();
             }
-        }else if (tipo.equalsIgnoreCase("Fbbbbbbbbb")){
+        }else if (tipo.equalsIgnoreCase("F")){
             for (Rotta r : this.getRotteFinali()) {//TODO costo totale dev essere di tutto non dei soli linehaul o dei soli backhaul
                 tot += r.getCosto();
             }
