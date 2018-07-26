@@ -59,14 +59,15 @@ public class Main {
                 do {
                     numero++;
                     ListaRotte lista = new ListaRotte();
-                    while(lista.inizializzaLineHaul(file));
-                    lista.inizializzaBackHaul(file);
+                    while(!lista.inizializzaLineHaul(file));
+                    while(!lista.inizializzaBackHaul(file));
                     //lista.bestExchangeLinehaul();
                     lista.bestRelocateLinehaul();
                     //lista.bestExchangeBackhaul();
                     lista.bestRelocateBackhaul();
                     lista.merge();
                     percorsi.add(lista);
+                    System.out.println("Tentativo numero " + numero);
                 } while (numero < 10);
 
                 double min = 99999999999999999999999999.0;

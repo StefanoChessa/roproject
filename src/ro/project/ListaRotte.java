@@ -37,8 +37,10 @@ public class ListaRotte implements Cloneable {
         boolean flagB = false;
         this.nodiClienti = istanza.getLineHaulList();
         this.nodoDeposito = istanza.getNodoDeposito();
+        this.listaRotteSingole = new ArrayList<>();
+        this.listaRotteIniziali = new ArrayList<>();
 
-            for (Nodo cliente : nodiClienti) {
+        for (Nodo cliente : nodiClienti) {
                 Rotta r = new Rotta(-1);
                 r.aggiungiAllaRotta(cliente);
                 listaRotteSingole.add(r);
@@ -92,8 +94,10 @@ public class ListaRotte implements Cloneable {
         }
         */
 
-        if (flag>2) return false;
-        else return true;
+        if (flag>3) {
+            System.out.print(".");
+            return false;
+        } else return true;
 
     }
 
@@ -101,10 +105,13 @@ public class ListaRotte implements Cloneable {
     /**
      * @param istanza
      */
-    public void inizializzaBackHaul(FileUploader istanza) {
+    public boolean inizializzaBackHaul(FileUploader istanza) {
 
         this.nodiClientiBackHaul = istanza.getBackHaulList();
         this.nodoDeposito = istanza.getNodoDeposito();
+
+        this.listaRotteSingoleBackHaul = new ArrayList<>();
+        this.listaRotteInizialiBackHaul = new ArrayList<>();
 
         for (Nodo cliente : nodiClientiBackHaul) {
             Rotta r = new Rotta(-1);
@@ -113,7 +120,7 @@ public class ListaRotte implements Cloneable {
         }
 
         int sizeBH = listaRotteSingoleBackHaul.size();
-        for (int i = 0; i < istanza.getNumeroVeicoli() && !listaRotteSingoleBackHaul.isEmpty(); i++) {
+        for (int i = 0; i < istanza.getNumeroVeicoli() && !listaRotteSingoleBackHaul.isEmpty() ; i++) {
             Rotta rottaIniziale = listaRotteSingoleBackHaul.get(0);
             rottaIniziale.setIndiceVeicolo(i + 1);
             listaRotteInizialiBackHaul.add(rottaIniziale);
@@ -124,8 +131,9 @@ public class ListaRotte implements Cloneable {
             listaRotteSingoleBackHaul.remove(0);
 
         }
+        int flag = 0;
 
-        while (!listaRotteSingoleBackHaul.isEmpty()) {
+        while (!listaRotteSingoleBackHaul.isEmpty() && flag < 4 ) {
             for (int i = 0; i < istanza.getNumeroVeicoli() && !listaRotteSingoleBackHaul.isEmpty(); i++) {
 
                 int random = (new Random()).nextInt(listaRotteSingoleBackHaul.size());
@@ -135,11 +143,17 @@ public class ListaRotte implements Cloneable {
                     listaRotteInizialiBackHaul.get(i).mergeRotte(rottaTemp);
                     listaRotteInizialiBackHaul.get(i).setCapacitaVeicolo(listaRotteInizialiBackHaul.get(i).getCapacitaVeicolo() - capacitaNodo);
                     listaRotteSingoleBackHaul.remove(random);
-
+                    flag = 0;
                 }
             }
-
+        flag++;
         }
+
+
+        if (flag>3) {
+            System.out.print(",");
+            return false;
+        } else return true;
     }
 
     /**
