@@ -1,4 +1,3 @@
-//lainhoul=delivery
 package ro.project;
 
 import java.io.File;
@@ -8,8 +7,6 @@ import java.util.Comparator;
 
 public class Main {
 
-
-
     public static void main(String[] args) {
 
         double mediaAritmetica = 0;
@@ -17,6 +14,7 @@ public class Main {
         double deviazioneStandard = 0;
         ArrayList<Double> errorelista = new ArrayList<>();
         double powDev = 0;
+        Cronometro tempo = new Cronometro();
 
         File folder = new File("project_files/Instances/");
         File[] listOfFiles = folder.listFiles();
@@ -55,6 +53,8 @@ public class Main {
             file.caricaIstanza(filename);
             sol.caricaIstanza(filename);
 
+            tempo.reset();
+            tempo.start();
 
             MatriceDistanze matr = new MatriceDistanze(file.getTuttiNodi());
             matr.creaMatrice();
@@ -98,12 +98,15 @@ public class Main {
                 nodiTotali += a.getNodi().size();
             }
 
+            tempo.stop();
+
             System.out.print("Nodi totali dopo " + nodiTotali);
             System.out.println("Costo totale = " + listaMigliore.getCostoTotale("F"));
 
             Double errore = (listaMigliore.getCostoTotale("F") - sol.returnZP()) / Math.abs(sol.returnZP());
 
             PrintResults risultati = new PrintResults(errore);
+            risultati.addTime(tempo.getSeconds());
             risultati.printOnFile(filename);
 
             operatoreMedia += errore;

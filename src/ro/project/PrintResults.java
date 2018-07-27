@@ -11,6 +11,7 @@ import java.nio.file.StandardOpenOption;
 public class PrintResults {
 
     double errore;
+    double tempo;
 
     public PrintResults(double errore){
 
@@ -33,11 +34,15 @@ public class PrintResults {
             out.println("File analizzato: " + filename);
             //more code
             out.println("Errore relativo: " + errore);
+
+            out.println("Tempo di esecuzione: " + tempo + "secs");
             //more code
         } catch (IOException e) {
             //exception handling left as an exercise for the reader
         }
+    }
 
-
+    void addTime(double tempo){
+        this.tempo = tempo;
     }
 }

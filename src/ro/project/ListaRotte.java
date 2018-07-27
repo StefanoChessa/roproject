@@ -53,7 +53,6 @@ public class ListaRotte implements Cloneable {
                 rottaIniziale.setIndiceVeicolo(i + 1);
                 listaRotteIniziali.add(rottaIniziale);
                 rottaIniziale.setCapacitaVeicolo(istanza.getCapacitaVeicolo());
-                //Veicolo veicolo = new Veicolo(i+1, istanza.getCapacitaVeicolo());
                 //Sottraggo alla capaità totale del veicolo, la capacità del primo nodo della prima rotta
                 int newCapacita = rottaIniziale.getCapacitaVeicolo() - ((NodoCliente) (rottaIniziale.getNodi().get(0))).getDelivery();
                 rottaIniziale.setCapacitaVeicolo(newCapacita);
