@@ -26,8 +26,7 @@ public class ListaRotte implements Cloneable {
         this.listaRotteSingoleBackHaul = new ArrayList<>();
         this.listaRotteInizialiBackHaul = new ArrayList<>();
         this.rotteFinali = new ArrayList<>();
-        //this.veicoli = new ArrayList<>();
-        //this.veicoliBH = new ArrayList<>();
+
     }
 
     /**
@@ -56,7 +55,6 @@ public class ListaRotte implements Cloneable {
                 //Sottraggo alla capaità totale del veicolo, la capacità del primo nodo della prima rotta
                 int newCapacita = rottaIniziale.getCapacitaVeicolo() - ((NodoCliente) (rottaIniziale.getNodi().get(0))).getDelivery();
                 rottaIniziale.setCapacitaVeicolo(newCapacita);
-                //veicoli.add(veicolo);
                 listaRotteSingole.remove(random);
             }
 
@@ -105,14 +103,14 @@ public class ListaRotte implements Cloneable {
 
         int sizeBH = listaRotteSingoleBackHaul.size();
         for (int i = 0; i < istanza.getNumeroVeicoli() && !listaRotteSingoleBackHaul.isEmpty() ; i++) {
-            Rotta rottaIniziale = listaRotteSingoleBackHaul.get(0);
+            int random = (new Random()).nextInt(listaRotteSingoleBackHaul.size());
+            Rotta rottaIniziale = listaRotteSingoleBackHaul.get(random);
             rottaIniziale.setIndiceVeicolo(i + 1);
             listaRotteInizialiBackHaul.add(rottaIniziale);
             rottaIniziale.setCapacitaVeicolo(istanza.getCapacitaVeicolo());
             int newCapacita = rottaIniziale.getCapacitaVeicolo() - ((NodoCliente) (rottaIniziale.getNodi().get(0))).getPickup();
             rottaIniziale.setCapacitaVeicolo(newCapacita);
-            //veicoliBH.add(veicolo);
-            listaRotteSingoleBackHaul.remove(0);
+            listaRotteSingoleBackHaul.remove(random);
 
         }
         int flag = 0;
@@ -121,11 +119,12 @@ public class ListaRotte implements Cloneable {
             for (int i = 0; i < istanza.getNumeroVeicoli() && !listaRotteSingoleBackHaul.isEmpty(); i++) {
 
                 int random = (new Random()).nextInt(listaRotteSingoleBackHaul.size());
+                int randomRotta = (new Random()).nextInt(listaRotteInizialiBackHaul.size());
                 Rotta rottaTemp = listaRotteSingoleBackHaul.get(random);
                 int capacitaNodo = ((NodoCliente) rottaTemp.getNodi().get(0)).getPickup();
-                if (listaRotteInizialiBackHaul.get(i).getCapacitaVeicolo() > capacitaNodo) {
-                    listaRotteInizialiBackHaul.get(i).mergeRotte(rottaTemp);
-                    listaRotteInizialiBackHaul.get(i).setCapacitaVeicolo(listaRotteInizialiBackHaul.get(i).getCapacitaVeicolo() - capacitaNodo);
+                if (listaRotteInizialiBackHaul.get(randomRotta).getCapacitaVeicolo() > capacitaNodo) {
+                    listaRotteInizialiBackHaul.get(randomRotta).mergeRotte(rottaTemp);
+                    listaRotteInizialiBackHaul.get(randomRotta).setCapacitaVeicolo(listaRotteInizialiBackHaul.get(randomRotta).getCapacitaVeicolo() - capacitaNodo);
                     listaRotteSingoleBackHaul.remove(random);
                     flag = 0;
                 }
