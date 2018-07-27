@@ -79,21 +79,6 @@ public class ListaRotte implements Cloneable {
             flag ++;
         }
 
-
-        /*
-        if (listaRotteSingole.isEmpty()) {
-            // controllaVincolo(listaRotteSingole,listaRotteIniziali);
-            System.out.println("ok " + listaRotteSingole.size());
-            flagB = true;
-        }
-            //da rimuovere solo per il push
-        if (listaRotteSingole.isEmpty()) {
-            // controllaVincolo(listaRotteSingole,listaRotteIniziali);
-            System.out.println("ok " + listaRotteSingole.size());
-            flagB = true;
-        }
-        */
-
         if (flag>3) {
             System.out.print(".");
             return false;

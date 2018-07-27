@@ -65,14 +65,14 @@ public class Main {
                 ListaRotte lista = new ListaRotte();
                 while (!lista.inizializzaLineHaul(file)) ;
                 while (!lista.inizializzaBackHaul(file)) ;
-                //lista.bestExchangeLinehaul();
+                lista.bestExchangeLinehaul();
                 lista.bestRelocateLinehaul();
-                //lista.bestExchangeBackhaul();
+                lista.bestExchangeBackhaul();
                 lista.bestRelocateBackhaul();
                 lista.merge();
                 percorsi.add(lista);
-                System.out.println("Tentativo numero " + numero);
-            } while (numero < 10);
+                //System.out.println("Tentativo numero " + numero);
+            } while (numero < 100);
 
             double min = 99999999999999999999999999.0;
             ListaRotte listaMigliore = new ListaRotte();
